@@ -9,15 +9,14 @@ using UnityEditor;
 public class CharacterMovement : MonoBehaviour
 {
     MoveController controller;
-    CharacterStats stats;
     protected Rigidbody2D rb;
     Vector2 movementDirection = Vector2.zero;
+    public float speed = 5;
 
     protected void Awake()
     {
         controller = GetComponent<MoveController>();
         rb = GetComponent<Rigidbody2D>();
-        stats = GetComponentInChildren<CharacterStats>();
     }
     private void Start()
     {
@@ -33,7 +32,7 @@ public class CharacterMovement : MonoBehaviour
     }
     void ApplyMovement(Vector2 direction)
     {
-        direction *= stats.Speed;
+        direction *= speed;
         rb.velocity = direction;
     }
 }
