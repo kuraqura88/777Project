@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class EnemyAtk : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
-    public EnemyPattern enemyPattern;
+    private EnemyPattern enemyPattern; 
     private float timer = 0.0f;
     private float attackRate = 1.0f;
     private float nextAttackTime = 0.0f;
+
+    private void Awake()
+    {
+        enemyPattern = GetComponent<EnemyPattern>();
+    }
+
     private void Update()
     {
         if (Time.time > nextAttackTime)

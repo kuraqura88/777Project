@@ -13,10 +13,8 @@ public class EnemyPattern : MonoBehaviour
     private Vector2 targetPosition;
     private void Start()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;       // 머지 후 삭제
         stopMove = Random.Range(5.0f, 6.5f);
-
-        enemyRespawn = GetComponent<EnemyRespawn>();
 
         float randomX = Random.Range(6f, 7f);
         float randomY = Random.Range(4f, -4f);

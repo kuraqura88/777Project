@@ -12,6 +12,7 @@ public class EnemyRespawn : MonoBehaviour
     private void Start()
     {
         enemies = new GameObject[] { enemyif, enemyfor, enemyswitch, enemypublic };
+        //보스가 죽었거나 플레이어가 죽었거나 씬이 전환되는 경우에 빠져나가는 조건 적용 필수
         InvokeRepeating("MakeEnemy", 1f, 2f);      
     }
     private void MakeEnemy()
