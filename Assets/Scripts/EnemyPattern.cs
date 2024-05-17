@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyPattern : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class EnemyPattern : MonoBehaviour
     private float stopMove;
     public bool isStop = false;
     private EnemyRespawn enemyRespawn;
+    private Vector2 targetPosition;
 
     private void Start()
     {
@@ -16,6 +18,10 @@ public class EnemyPattern : MonoBehaviour
         stopMove = Random.Range(5.0f, 6.5f);
 
         enemyRespawn = GetComponent<EnemyRespawn>();
+
+        float randomX = Random.Range(6f, 7f);
+        float randomY = Random.Range(4f, -4f);
+        targetPosition = new Vector2(randomX, randomY);
     }
 
     private void Update()
@@ -38,6 +44,10 @@ public class EnemyPattern : MonoBehaviour
         else if (gameObject.tag == "enemyswitch")
         {
             MovePattern3();
+        }
+        else if (gameObject.tag == "enemypublic")
+        {
+            MovePattern4();
         }
     }
 
@@ -75,11 +85,10 @@ public class EnemyPattern : MonoBehaviour
         // 현재 방향으로 이동
         transform.position += currentDirection * movespeed * Time.deltaTime;
     }
-
     private void MovePattern4()
     {
-        //transform.position += Vector3.right * movespeed + Vector3.
-
-    }
+            float step = movespeed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+    }   
 }
 
