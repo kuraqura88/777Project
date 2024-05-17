@@ -11,7 +11,6 @@ public class EnemyPattern : MonoBehaviour
     public bool isStop = false;
     private EnemyRespawn enemyRespawn;
     private Vector2 targetPosition;
-
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -23,7 +22,6 @@ public class EnemyPattern : MonoBehaviour
         float randomY = Random.Range(4f, -4f);
         targetPosition = new Vector2(randomX, randomY);
     }
-
     private void Update()
     {
         if (gameObject.tag == "enemyif")
@@ -50,12 +48,10 @@ public class EnemyPattern : MonoBehaviour
             MovePattern4();
         }
     }
-
     private void MovePattern1()
     {
         transform.position += Vector3.left * movespeed * Time.deltaTime;
     }
-
     private void MovePattern2()     // gpt 작품
     {
         float amplitude = 20.0f; // 지그재그의 높이

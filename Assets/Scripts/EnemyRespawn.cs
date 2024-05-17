@@ -8,15 +8,12 @@ public class EnemyRespawn : MonoBehaviour
     public GameObject enemyfor;
     public GameObject enemyswitch;
     public GameObject enemypublic;
-
     private GameObject[] enemies;
-
     private void Start()
     {
         enemies = new GameObject[] { enemyif, enemyfor, enemyswitch, enemypublic };
         InvokeRepeating("MakeEnemy", 1f, 2f);      
     }
-
     private void MakeEnemy()
     {
         int index = Random.Range(0, enemies.Length);
@@ -26,7 +23,6 @@ public class EnemyRespawn : MonoBehaviour
 
         Instantiate(selectedEnemy, spawnPosition, Quaternion.identity);
     }
-
     private Vector2 GetSpawnPosition(GameObject enemy)
     {
         if (enemy == enemyswitch)
@@ -59,5 +55,4 @@ public class EnemyRespawn : MonoBehaviour
             return new Vector2(10, RespawnY);
         }
     }
-
 }
