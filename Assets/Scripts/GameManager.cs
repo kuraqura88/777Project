@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // 싱글톤 패턴을 위한 static 인스턴스 변수
     private static GameManager instance;
-
     // 싱글톤 인스턴스 접근을 위한 프로퍼티
     public static GameManager Instance
     {
@@ -30,8 +28,13 @@ public class GameManager : MonoBehaviour
 
     private EffectManager effectManager;
     private SoundManager soundManager;
+    //플레이어, 점수, 게임 오버, 처음 룰렛요소
 
-    public GameObject player;
+    public GameObject[] characters;                                // 선택 가능한 캐릭터들을 담을 배열
+
+    public Text scoretext;                                         //점수 부분
+    private int score = 0;
+
     public Slider slTimer;
     public float speedoftime= 50f;                               //시간 배속
     private bool stageclear=false;                                //스테이지 클리어시 작동하는 bool값
@@ -54,10 +57,21 @@ public class GameManager : MonoBehaviour
         effectManager = GetComponent<EffectManager>() ?? gameObject.AddComponent<EffectManager>();
         soundManager = GetComponent<SoundManager>() ?? gameObject.AddComponent<SoundManager>();
     }
+    public EffectManager EffectManager
+    {
+        get { return effectManager; }
+    }
+
+    public SoundManager SoundManager
+    {
+        get { return soundManager; }
+    }
     private void Start()
     {
         timeRemaining = timerDuration;
         UpdateTimerUI();
+        SelectRandomCharacter(); // 시작할 때 랜덤 캐릭터 선택
+
     }
     private void Update()
     {
@@ -88,16 +102,31 @@ public class GameManager : MonoBehaviour
         slTimer.value = timeRemaining / timerDuration;
     }
 
-    public EffectManager EffectManager
+    public void Score()
     {
-        get { return effectManager; }
+        score += 10; // 점수를 10점씩 증가시킵니다.
+        UpdateScoreUI(); // 점수 UI를 업데이트합니다.
     }
-
-    public SoundManager SoundManager
+    private void UpdateScoreUI()
     {
-        get { return soundManager; }
+        scoretext.text = "Score: " + score.ToString(); // 점수 텍스트를 업데이트합니다.
     }
+    public void SelectRandomCharacter()
+    {
+        int randomIndex = Random.Range(0, characters.Length); // 배열에서 랜덤한 인덱스 선택
+        GameObject selectedCharacter = characters[randomIndex]; // 선택된 캐릭터
 
-    // 게임 관련 로직 추가
-
+        // 선택된 캐릭터를 활성화하고, 나머지 캐릭터는 비활성화
+        for (int i = 0; i < characters.Length; i++)
+        {
+            if (i == randomIndex)
+            {
+                characters[i].SetActive(true);
+            }
+            else
+            {
+                characters[i].SetActive(false);
+            }
+        }
+    }
 }
