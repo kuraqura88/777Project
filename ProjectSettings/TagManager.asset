@@ -4,7 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Enemy
+=======
+  - enemyif
+  - enemyfor
+  - enemyswitch
+  - enemypublic
+>>>>>>> dohyun
   layers:
   - Default
   - TransparentFX
