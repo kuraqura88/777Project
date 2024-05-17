@@ -226,7 +226,7 @@ SpriteRenderer:
   m_Size: {x: 1.6666666, y: 2.0686848}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &643942405
@@ -263,14 +263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf1aecf598620e44a7b3d29501621d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  rb: {fileID: 0}
-  movementDirection: {x: 0, y: 0}
   speed: 5
   spriteImage: {fileID: 1354194248, guid: 20cc923e38e4d2743a646875f9075f71, type: 3}
-  spriteRenderer: {fileID: 0}
-  animator: {fileID: 0}
-  stats: {fileID: 0}
 --- !u!114 &643942407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,9 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357488b55949ff34f9ed781562283c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  rb: {fileID: 0}
-  movementDirection: {x: 0, y: 0}
   speed: 5
 --- !u!50 &643942409
 Rigidbody2D:
@@ -389,15 +380,12 @@ MonoBehaviour:
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_CallsDirty: 1
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_CallsDirty: 1
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_CallsDirty: 1
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
