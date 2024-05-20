@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class CharacterStats : MonoBehaviour, IDamagable
+public class CharacterStats : IDamagable
 {
-    public CharacterType characterType { get; private set; } // 수정: private set 추가
+    public Define.CharacterType characterType { get; private set; } // 수정: private set 추가
     public int Life { get; set; }
     public int Power { get; set; }
     public int Speed { get; set; }
 
-    public CharacterStats(CharacterType characterType, int life, int damage, int speed)
+    public CharacterStats(Define.CharacterType characterType, int life, int power, int speed)
     {
         this.characterType = characterType;
         Life = life;
@@ -15,7 +15,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
         Speed = speed;
     }
 
-    public void SetTypeStats(CharacterType characterType)
+    public void SetTypeStats(Define.CharacterType characterType)
     {
         this.characterType = characterType; // 캐릭터 타입 설정
         switch (characterType)
@@ -27,7 +27,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
                 break;
             case Define.CharacterType.Rare:
                 Life = 2;
-                Damage = 2;
+                Power = 2;
                 Speed = 2;
                 break;
             case Define.CharacterType.Unique:

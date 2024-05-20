@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     {
         if (characterStats != null)
         {
-            characterStats.SetTypeStats(CharacterType.Rare);
+            characterStats.SetTypeStats(Define.CharacterType.Rare);
         }
         else
         {

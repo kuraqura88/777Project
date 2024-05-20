@@ -9,16 +9,16 @@ public class RoulRat : MonoBehaviour
         GameManager.Instance.onRoulRat += GenerateCharacterWithRandomStats;
     }
 
-    private CharacterType GetRandomCharacterType()
+    private Define.CharacterType GetRandomCharacterType()
     {
-        return (CharacterType)Random.Range(0, (int)CharacterType.Max);
+        return (Define.CharacterType)Random.Range(0, (int)Define.CharacterType.MAX);
     }
 
     // SelectRandomCharacter 메서드의 반환형을 CharacterStats로 변경
     public CharacterStats SelectRandomCharacter()
     {
         // 랜덤으로 캐릭터 타입 선택
-        CharacterType randomType = GetRandomCharacterType();
+        Define. CharacterType randomType = GetRandomCharacterType();
         Debug.Log("Selected Character Type: " + randomType);
 
         // 선택된 캐릭터 타입의 스탯을 PlayerDataManager에서 가져옴

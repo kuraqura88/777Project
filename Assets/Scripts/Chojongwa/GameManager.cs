@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     private EffectManager effectManager;
     private SoundManager soundManager;
+    private DataManager dataManager;
+
     private PlayerDataManager playerDataManager;
     private PlayerController _player;
 
@@ -67,7 +69,18 @@ public class GameManager : MonoBehaviour
     {
         get { return soundManager; }
     }
-
+    public DataManager Data
+    {
+        get
+        {
+            if (dataManager == null)
+            {
+                dataManager = new DataManager();
+                dataManager.Init();
+            }
+            return dataManager;
+        }
+    }
     private void Start()
     {
         PlayerController player = Player;
