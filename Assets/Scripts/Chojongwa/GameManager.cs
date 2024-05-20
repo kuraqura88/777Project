@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
     private SoundManager soundManager;
     //플레이어, 점수, 게임 오버, 처음 룰렛요소
 
-    public GameObject[] characters;                                // 선택 가능한 캐릭터들을 담을 배열
+    public GameObject characterPrefab; // 캐릭터 프리팹
+    private GameObject activeCharacter; // 활성화된 캐릭터
 
     public Text scoretext;                                         //점수 부분
     private int score = 0;

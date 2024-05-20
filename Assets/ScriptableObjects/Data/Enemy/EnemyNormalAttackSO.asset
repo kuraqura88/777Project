@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: EnemyNormalAttackSO
   m_EditorClassIdentifier: 
   size: 0.2
-  delay: 0.21
+  delay: 0.5
   speed: 100
-  direction: 3
-  projectile: 3
+  direction: 4
+  projectile: 2
   target:
     serializedVersion: 2
-    m_Bits: 128
-  numberOfProjectilesPerShot: 16
-  projectilesAngleSpace: 10
-  spreadAngle: 1
+    m_Bits: 64
+  numberOfProjectilesPerShot: 1
+  projectilesAngleSpace: 24.5
+  spreadAngle: 2.81
