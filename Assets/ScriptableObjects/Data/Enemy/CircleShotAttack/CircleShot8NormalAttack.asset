@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbed683ef40d90a44b36017f6931720c, type: 3}
+  m_Name: CircleShot8NormalAttack
+  m_EditorClassIdentifier: 
+  size: 1
+  delay: 3
+  speed: 8
+  direction: 2
+  projectile: 0
+  target:
+    serializedVersion: 2
+    m_Bits: 64
+  numberOfProjectilesPerShot: 8
+  projectilesAngleSpace: 45
+  spreadAngle: 0

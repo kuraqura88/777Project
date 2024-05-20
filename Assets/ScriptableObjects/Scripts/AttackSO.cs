@@ -13,4 +13,6 @@ public class AttackSO : ScriptableObject
     public Define.Projectile projectile;
     public LayerMask target;
 
+    public AudioClip attackSound;
+
 }

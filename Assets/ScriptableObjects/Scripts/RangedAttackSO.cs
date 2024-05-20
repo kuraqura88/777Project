@@ -8,7 +8,7 @@ public class RangedAttackSO : AttackSO
 {
     [Header("Projectile Property")]
 
-    [Range(1, 50)]
+    [Range(1, 64)]
     public int numberOfProjectilesPerShot = 1;
    
     [Range(1f, 90f)]

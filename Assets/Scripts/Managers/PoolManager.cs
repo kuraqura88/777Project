@@ -1,18 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    class Pool
+    class Pool<T> where T : UnityEngine.Component
     {
+        // 풀링 대상 오브젝트
         public GameObject Original { get; private set; }
+
+        // 오브젝트를 담아두는 부모 오브젝트
         public Transform Root { get; set; }
 
-        public Stack<GameObject> _poolStack = new Stack<GameObject>();
+        // 실질적 오브젝트를 관리하는 데이터
+        public Stack<T> _poolStack = new Stack<T>();
 
 
-        public void Init(GameObject original, int count = 50)
+        // 오리지널 오브젝트 꺼내기
+        public GameObject GetOriginal() { return Original; }
+
+
+        /// <summary>
+        /// 
+        /// [기능]
+        /// 
+        /// Pool을 초기화하는 메서드
+        /// 1. Original 오브젝트를 저장
+        /// 2. 오브젝트를 담아둘 Parent 오브젝트 생성
+        /// 3. Count만큼 오브젝트를 생성 후, Push
+        /// 
+        /// </summary>
+        /// <param name="original"></param>
+        /// <param name="count"></param>
+        public void Init(GameObject original, int count = 300)
         {
             Original = original;
 
@@ -24,15 +45,31 @@ public class PoolManager : MonoBehaviour
             }
         }
 
-        GameObject Create()
+
+        /// <summary>
+        /// 
+        /// [기능]
+        /// 오브젝트를 생성하는 메서드
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        T Create()
         {
-            GameObject go = Object.Instantiate<GameObject>(Original);
+            GameObject go = Instantiate(Original);
             go.name = Original.name;
 
-            return go;
+            // 해당 타입으로 오브젝트를 장착
+            // 만약 해당 컴포넌트가 없을 시 오브젝트를 장착
+            T component = go.GetComponent<T>();
+            if (component == null)
+            {
+                component = go.AddComponent<T>();
+            }
+
+            return component;
         }
 
-        public void Push(GameObject obj)
+        public void Push(T obj)
         {
             if (obj == null)
                 return;
@@ -43,16 +80,16 @@ public class PoolManager : MonoBehaviour
             _poolStack.Push(obj);
         }
 
-        public GameObject Pop(Transform parent)
+        public T Pop(Transform parent)
         {
-            GameObject obj = null;
+            T obj = null;
             if (_poolStack.Count > 0)
                 obj = _poolStack.Pop();
             else
                 obj = Create();
 
 
-            obj.SetActive(true);
+            obj.gameObject.SetActive(true);
 
             obj.transform.parent = parent;
             return obj;
@@ -61,13 +98,15 @@ public class PoolManager : MonoBehaviour
 
     public static PoolManager Instance;
 
-    Dictionary<string, Pool> poolDict = new Dictionary<string, Pool>();
+    // 최상위 부모
+    private Dictionary<(string, Type), object> poolDict = new Dictionary<(string, Type), object>();
 
     private void Awake()
     {
         Init();
     }
 
+    // 초기화
     public void Init()
     {
         if (Instance == null)
@@ -76,47 +115,79 @@ public class PoolManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
+    // 데이터 전부 삭제
     public void Clear()
     {
         poolDict.Clear();
     }
 
-    public void CreatePool(GameObject original, int count = 50)
+
+    /// <summary>
+    /// 
+    /// [기능]
+    /// Pool을 생성하는 메서드
+    /// 
+    /// 제네릭으로 다양한 타입의 풀을 자동으로 생성 가능
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="original"> 생성 대상 오브젝트 </param>
+    /// <param name="count" : 초기 풀오브젝트 개수 ></param>
+    public void CreatePool<T>(GameObject original, int count = 50) where T : Component
     {
-        Pool pool = new Pool();
-        pool.Init(original, count);
-        pool.Root.parent = transform;
-
-        poolDict.Add(original.name, pool);
-    }
-
-    public void Push(GameObject obj)
-    {
-        string name = obj.gameObject.name;
-
-        if(poolDict.ContainsKey(name) == false)
+        var key = (original.name, typeof(T));
+        if (poolDict.ContainsKey(key))
         {
-            GameObject.Destroy(obj.gameObject);
             return;
         }
 
-        poolDict[name].Push(obj);
+        Pool<T> pool = new Pool<T>();
+        pool.Init(original, count);
+
+        pool.Root.SetParent(transform);
+        poolDict.Add(key, pool);
     }
 
-    public GameObject Pop(GameObject original, Transform parent = null)
+    /// <summary>
+    /// 
+    /// [기능]
+    /// 사용완료한 풀 오브젝트를 반납하는 메서드
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    public void Push<T>(T obj) where T : Component
     {
-        if(poolDict.ContainsKey(original.name) == false)
+        var key = (obj.gameObject.name, typeof(T));
+        if (!poolDict.ContainsKey(key))
         {
-            CreatePool(original);
+            Destroy(obj.gameObject);
+            return;
         }
-        return poolDict[original.name].Pop(parent);
+
+        ((Pool<T>)poolDict[key]).Push(obj);
     }
 
-    public GameObject GetOriginal(string name)
-    {
-        if (poolDict.ContainsKey(name) == false)
-            return null;
 
-        return poolDict[name].Original;
+
+    /// <summary>
+    /// 
+    /// [기능]
+    /// 사용할 오브젝트를 꺼내는 메서드
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="original"></param>
+    /// <param name="parent"> 꺼내면서 부착할 부모 오브젝트 </param>
+    /// <returns></returns>
+    public T Pop<T>(GameObject original, Transform parent = null) where T : Component
+    {
+        var key = (original.name, typeof(T));
+        if (!poolDict.ContainsKey(key))
+        {
+            CreatePool<T>(original);
+        }
+        return ((Pool<T>)poolDict[key]).Pop(parent);
     }
 }

@@ -13,29 +13,9 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Normal_Attack",
-                    "type": "Value",
-                    "id": "7c346bf0-598c-4d0e-940e-7aa41d9f96cb",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "dde1e294-2445-4e07-a6b0-715cec411281",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Normal_Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "74adfb84-dea8-4ef2-a84e-a463dcce4726",
@@ -53,7 +33,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -64,7 +44,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -75,7 +55,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -86,7 +66,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -96,8 +76,8 @@
     ],
     "controlSchemes": [
         {
-            "name": "New control scheme",
-            "bindingGroup": "New control scheme",
+            "name": "PC",
+            "bindingGroup": "PC",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
