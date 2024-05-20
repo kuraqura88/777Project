@@ -11,8 +11,7 @@ public class Projectile : MonoBehaviour
 
     private Vector2 direction = Vector2.zero;
 
-    private string target = "";
-
+    private LayerMask target;
 
     private void Awake()
     {
@@ -24,10 +23,11 @@ public class Projectile : MonoBehaviour
         Shoot();
     }
 
-    public void Init(Vector2 direction, float speed)
+    public void Init(Vector2 direction, float speed, LayerMask target)
     {
         this.direction = direction;
         this.speed = speed;
+        this.target = target;
     }
 
     public void Shoot()
@@ -38,7 +38,19 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if(IsLayerMatched(target, collision.gameObject.layer))
+        {
+            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            
+            if(damagable != null)
+            {
+                damagable.Damage(-1);
+                Debug.Log("¾Æ¾ß");
+            }
+
+            PoolManager.Instance.Push<Projectile>(this);
+        }
+        if (collision.CompareTag("Level"))
         {
             PoolManager.Instance.Push<Projectile>(this);
         }
@@ -51,4 +63,8 @@ public class Projectile : MonoBehaviour
         direction = Vector2.zero;
     }
 
+    private bool IsLayerMatched(int value, int objectLayer)
+    {
+        return value == (value | 1 << objectLayer);
+    }
 }

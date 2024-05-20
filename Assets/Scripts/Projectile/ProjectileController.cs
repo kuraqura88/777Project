@@ -79,6 +79,8 @@ public class ProjectileController : MonoBehaviour
         spreadAngle = attackSO.spreadAngle;
 
         targetMask = attackSO.target;
+
+        shootSound = attackSO.attackSound;
     }
 
     private void Update()
@@ -174,7 +176,7 @@ public class ProjectileController : MonoBehaviour
         if (projectile != null)
         {
             projectile.transform.position = transform.position;
-            projectile.Init(RotateVector2(aimDirection, angle), speed);
+            projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
         }
     }
 

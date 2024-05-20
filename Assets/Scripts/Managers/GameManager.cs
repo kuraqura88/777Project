@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+
     private static GameManager instance;
     // 싱글톤 인스턴스 접근을 위한 프로퍼티
     public static GameManager Instance

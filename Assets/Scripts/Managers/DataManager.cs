@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
 
 public class DataManager
@@ -11,28 +10,47 @@ public class DataManager
 
     // Projectiles Data
     private Dictionary<string, Projectile> projectileDict = new Dictionary<string, Projectile>();
+
+    private Dictionary<Define.EnemyType, EnemyController[]> enemyDict = new Dictionary<Define.EnemyType, EnemyController[]>();
     
     #endregion
-
 
     public void Init()
     {
         try
         {
-            Projectile[] projectiles = LoadAll<Projectile>("", Define.Prefabs.Projectiles);
+            CreateProjectileData();
 
-            if (projectiles != null)
-            {
-                foreach (var projectile in projectiles)
-                {
-                    projectileDict.Add(projectile.name, projectile);
-                    PoolManager.Instance.CreatePool<Projectile>(projectile.gameObject, 300);
-                }
-            }
+            CreateEnemyData();
         }
         catch(Exception ex)
         {
             Debug.Log(ex);
+        }
+    }
+
+    private void CreateEnemyData()
+    {
+        EnemyController[] enemies = LoadAll<EnemyController>("", Define.Prefabs.Enemy);
+        foreach (Define.EnemyType type in Enum.GetValues(typeof(Define.EnemyType)))
+        {
+            EnemyController[] controller = enemies.Where(x => x.enemyType == type).ToArray();
+
+            enemyDict.Add(type, controller);
+        }
+    }
+
+    private void CreateProjectileData()
+    {
+        Projectile[] projectiles = LoadAll<Projectile>("", Define.Prefabs.Projectiles);
+
+        if (projectiles != null)
+        {
+            foreach (var projectile in projectiles)
+            {
+                projectileDict.Add(projectile.name, projectile);
+                PoolManager.Instance.CreatePool<Projectile>(projectile.gameObject, 300);
+            }
         }
     }
 
@@ -68,6 +86,7 @@ public class DataManager
         return Resources.LoadAll<T>(path);
     }
 
+    #region ========== Get Data Method ===========
     public Projectile GetProjectile(string name)
     {
         if(projectileDict.TryGetValue(name, out Projectile projectile))
@@ -76,4 +95,15 @@ public class DataManager
         }
         return null;
     }
+
+    public EnemyController[] GetEnemyData(Define.EnemyType enemyType)
+    {
+        if(enemyDict.TryGetValue(enemyType, out var enemies))
+        {
+            return enemies;
+        }
+        return null;
+    }
+    #endregion
+
 }

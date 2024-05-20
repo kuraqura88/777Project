@@ -63,6 +63,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
         if (damage >= 0)
         {
             // TODO : 회복 처리
+            return false;
         }
         else
         {

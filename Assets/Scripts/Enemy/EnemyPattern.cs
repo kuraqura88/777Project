@@ -22,6 +22,7 @@ public class EnemyPattern : MonoBehaviour
     }
     private void Update()
     {
+        
         if (gameObject.tag == "enemyif")
         {
             if (!isStop && transform.position.x > stopMove)

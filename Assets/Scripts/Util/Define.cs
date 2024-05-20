@@ -25,7 +25,7 @@ public class Define
     public enum EnemyType
     {
         IF,
-        Switch
+        Switch,
     }
 
     public enum CharacterType
@@ -33,7 +33,8 @@ public class Define
         Normal,
         Rare,
         Unique,
-        Epic
+        Epic,
+        MAX
     }
 
     #region ========== DATA ==========
@@ -49,7 +50,6 @@ public class Define
         Player,
         Enemy,
         Projectiles,
-
     }
 
     #endregion
