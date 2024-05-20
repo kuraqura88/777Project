@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStats
 {
-    public CharacterType characterType { get; }
+    public CharacterType characterType { get; private set; } // 수정: private set 추가
     public int Life { get; set; }
     public int Damage { get; set; }
     public int Speed { get; set; }
 
-    public CharacterStats (CharacterType characterType, int life, int damage, int speed)
+    public CharacterStats(CharacterType characterType, int life, int damage, int speed)
     {
         this.characterType = characterType;
         Life = life;
@@ -17,9 +17,8 @@ public class CharacterStats : MonoBehaviour
 
     public CharacterStats SetTypeStats(CharacterType characterType)
     {
-        CharacterStats characterStats = null;
-
-        switch(characterType)
+        this.characterType = characterType; // 캐릭터 타입 설정
+        switch (characterType)
         {
             case CharacterType.Normal:
                 Life = 1;
@@ -29,7 +28,7 @@ public class CharacterStats : MonoBehaviour
             case CharacterType.Rare:
                 Life = 2;
                 Damage = 2;
-                Speed = 2; 
+                Speed = 2;
                 break;
             case CharacterType.Unique:
                 Life = 3;
@@ -44,6 +43,6 @@ public class CharacterStats : MonoBehaviour
             default:
                 break;
         }
-        return characterStats;
+        return this;
     }
 }
