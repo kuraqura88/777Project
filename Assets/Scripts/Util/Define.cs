@@ -19,9 +19,33 @@ public class Define
 
     public enum EnemyType
     {
+        Straight,
+        Wave,
+        UpDown,
+        Diagonal
+    }
+
+    public enum EnemyName
+    {
         If,
         For,
-        Switch,
+        Switch,        
         Public
+    }
+
+    public enum EnemyAttack
+    {
+        Attack1, // 직선 공격
+        Attack2, // 3갈래 공격
+        Attack3,  // 저격 공격
+        Attack4   // 자폭 (충돌)
+    }
+
+    public enum Prefabs
+    {
+        None,
+        Player,
+        Enemy,
+        Projectiles,
     }
 }

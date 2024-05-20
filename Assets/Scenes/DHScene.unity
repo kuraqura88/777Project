@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 382442381}
   - component: {fileID: 382442380}
-  - component: {fileID: 382442382}
   m_Layer: 0
   m_Name: EnemySpawn
   m_TagString: Untagged
@@ -153,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a529a0028f95344891e1868b1bc6b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyif: {fileID: 6282112386665564616, guid: 3acaa5ea84189174098e9cc91bfbf122, type: 3}
-  enemyfor: {fileID: 1803010868103168499, guid: 7a830e1508505234f85f5bd62ceea598, type: 3}
-  enemyswitch: {fileID: 7324920192645116795, guid: ce0e8ac9f35c2ec41b0f45cff6af333d, type: 3}
-  enemypublic: {fileID: 1441518804221407429, guid: 78e4233a75dd538428716be149c02594, type: 3}
+  enemyprefabs:
+  - {fileID: 3285227454208201056, guid: 37b62d0b6d9f60f4ea8768d3836909d5, type: 3}
+  - {fileID: -2163601740073379980, guid: b74133ee7f749224394aa6f08e66ba76, type: 3}
+  - {fileID: -2472737370684061758, guid: feffa848beaf307418004f21ecbf6acb, type: 3}
+  - {fileID: -6570585017524578511, guid: f8654de8555dc4c4a9b895ae69be3c1a, type: 3}
 --- !u!4 &382442381
 Transform:
   m_ObjectHideFlags: 0
@@ -172,19 +172,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &382442382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382442379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba3725f51686124caed40789e9ebe36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools: []
 --- !u!1 &1984233676
 GameObject:
   m_ObjectHideFlags: 0

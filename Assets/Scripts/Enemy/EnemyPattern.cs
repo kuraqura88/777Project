@@ -9,12 +9,14 @@ public class EnemyPattern : MonoBehaviour
     public float movespeed = 1.0f;
     private float stopMove;
     public bool isStop = false;
-    private EnemyRespawn enemyRespawn;
+    public bool canMove; // 추가
     private Vector2 targetPosition;
+
+    public Define.EnemyType type;
+
     private void Start()
     {
-        enemyRespawn = FindObjectOfType<EnemyRespawn>();
-
+        canMove = false;    
         stopMove = Random.Range(5.0f, 6.5f);
 
         float randomX = Random.Range(6f, 7f);
@@ -23,49 +25,46 @@ public class EnemyPattern : MonoBehaviour
     }
     private void Update()
     {
-        Define.EnemyType? currentEnemyType = null;
-        foreach (var kvp in enemyRespawn.EnemyDictionary)
+        if (canMove)
         {
-            if (kvp.Value == gameObject)
+            switch (type)
             {
-                currentEnemyType = kvp.Key;
-                break;
+                case Define.EnemyType.Straight:
+                    if (!isStop && transform.position.x > stopMove)
+                    {
+                        MovePattern1();
+                    }
+                    else
+                    {
+                        isStop = true;
+                    }
+                    break;
+                case Define.EnemyType.Wave:
+                    MovePattern2();
+                    break;
+                case Define.EnemyType.UpDown:
+                    MovePattern3();
+                    break;
+                case Define.EnemyType.Diagonal:
+                    MovePattern4();
+                    break;
             }
         }
-
-
-        switch (currentEnemyType)
-        {
-            case Define.EnemyType.If:
-                if (!isStop && transform.position.x > stopMove)
-                {
-                    MovePattern1();
-                }
-                else
-                {
-                    isStop = true;
-                }
-                break;
-            case Define.EnemyType.For:
-                MovePattern2();
-                break;
-            case Define.EnemyType.Switch:
-                MovePattern3();
-                break;
-            case Define.EnemyType.Public:
-                MovePattern4();
-                break;
-        }
     }
+
+
+
     private void MovePattern1()
     {
+        Debug.Log("패턴1");
         transform.position += Vector3.left * movespeed * Time.deltaTime;
     }
     private void MovePattern2()
     {
+        Debug.Log("패턴2");
         float amplitude = 20.0f;
         float frequency = 5.0f;
-        float sinWave = Mathf.Sin(Time.time * frequency) * amplitude;   
+        float sinWave = Mathf.Sin(Time.time * frequency) * amplitude;
 
         transform.position += (Vector3.left * movespeed + Vector3.up * sinWave) * Time.deltaTime;
         if (transform.position.x < -10.0f)
@@ -76,6 +75,7 @@ public class EnemyPattern : MonoBehaviour
     private Vector3 currentDirection = Vector3.down;
     private void MovePattern3()
     {
+        Debug.Log("패턴3");
         if (currentDirection == Vector3.up && transform.position.y > 6f)
         {
             currentDirection = Vector3.down;
@@ -89,8 +89,9 @@ public class EnemyPattern : MonoBehaviour
     }
     private void MovePattern4()
     {
-            float step = movespeed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
-    }   
+        Debug.Log("패턴4");
+        float step = movespeed * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+    }
 }
 
