@@ -16,4 +16,12 @@ public class Define
         Right,
         Target
     }
+
+    public enum EnemyType
+    {
+        If,
+        For,
+        Switch,
+        Public
+    }
 }

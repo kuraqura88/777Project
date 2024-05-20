@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5564868037428896210}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: enemyif
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12f180e72a98d147a0515a614096f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeedif: 1
+  movespeed: 1
   isStop: 0
 --- !u!114 &5564868037428896210
 MonoBehaviour:
@@ -112,4 +112,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1ce15ac9004684b9470c4860aca0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPattern: {fileID: 3285227454208201056}

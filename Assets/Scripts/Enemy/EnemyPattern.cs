@@ -13,7 +13,8 @@ public class EnemyPattern : MonoBehaviour
     private Vector2 targetPosition;
     private void Start()
     {
-        Application.targetFrameRate = 60;       // 머지 후 삭제
+        enemyRespawn = FindObjectOfType<EnemyRespawn>();
+
         stopMove = Random.Range(5.0f, 6.5f);
 
         float randomX = Random.Range(6f, 7f);
@@ -22,61 +23,68 @@ public class EnemyPattern : MonoBehaviour
     }
     private void Update()
     {
-        if (gameObject.tag == "enemyif")
+        Define.EnemyType? currentEnemyType = null;
+        foreach (var kvp in enemyRespawn.EnemyDictionary)
         {
-            if (!isStop && transform.position.x > stopMove)
+            if (kvp.Value == gameObject)
             {
-                MovePattern1();
-            }
-            else
-            {
-                isStop = true;
+                currentEnemyType = kvp.Key;
+                break;
             }
         }
-        else if (gameObject.tag == "enemyfor")
+
+
+        switch (currentEnemyType)
         {
-            MovePattern2();
-        }
-        else if (gameObject.tag == "enemyswitch")
-        {
-            MovePattern3();
-        }
-        else if (gameObject.tag == "enemypublic")
-        {
-            MovePattern4();
+            case Define.EnemyType.If:
+                if (!isStop && transform.position.x > stopMove)
+                {
+                    MovePattern1();
+                }
+                else
+                {
+                    isStop = true;
+                }
+                break;
+            case Define.EnemyType.For:
+                MovePattern2();
+                break;
+            case Define.EnemyType.Switch:
+                MovePattern3();
+                break;
+            case Define.EnemyType.Public:
+                MovePattern4();
+                break;
         }
     }
     private void MovePattern1()
     {
         transform.position += Vector3.left * movespeed * Time.deltaTime;
     }
-    private void MovePattern2()     // gpt 작품
+    private void MovePattern2()
     {
-        float amplitude = 20.0f; // 지그재그의 높이
-        float frequency = 5.0f; // 지그재그의 빈도
-        float sinWave = Mathf.Sin(Time.time * frequency) * amplitude;   // 시간에 따라 변화하는 값        
+        float amplitude = 20.0f;
+        float frequency = 5.0f;
+        float sinWave = Mathf.Sin(Time.time * frequency) * amplitude;   
 
-        transform.position += (Vector3.left * movespeed + Vector3.up * sinWave) * Time.deltaTime;  // 포물선 운동을 추가한 좌측 이동
+        transform.position += (Vector3.left * movespeed + Vector3.up * sinWave) * Time.deltaTime;
         if (transform.position.x < -10.0f)
         {
             Destroy(gameObject);
         }
     }
-    private Vector3 currentDirection = Vector3.down; // 초기 이동 방향 설정
+    private Vector3 currentDirection = Vector3.down;
     private void MovePattern3()
     {
-        // 위로 이동 중이고, y 위치가 6보다 크면 방향 전환
         if (currentDirection == Vector3.up && transform.position.y > 6f)
         {
             currentDirection = Vector3.down;
         }
-        // 아래로 이동 중이고, y 위치가 -6보다 작으면 방향 전환
         else if (currentDirection == Vector3.down && transform.position.y < -6f)
         {
             currentDirection = Vector3.up;
         }
 
-        // 현재 방향으로 이동
         transform.position += currentDirection * movespeed * Time.deltaTime;
     }
     private void MovePattern4()

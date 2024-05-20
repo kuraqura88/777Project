@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2175479303897591226}
   m_Layer: 0
   m_Name: Triangle
-  m_TagString: enemyswitch
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,4 +112,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1ce15ac9004684b9470c4860aca0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPattern: {fileID: -2472737370684061758}
