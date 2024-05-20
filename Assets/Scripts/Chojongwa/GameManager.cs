@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     private EffectManager effectManager;
     private SoundManager soundManager;
+    private PlayerDataManager playerDataManager; // PlayerDataManager 추가
+
     //플레이어, 점수, 게임 오버, 처음 룰렛요소
 
     public GameObject characterPrefab; // 캐릭터 프리팹
@@ -58,6 +60,8 @@ public class GameManager : MonoBehaviour
 
         effectManager = GetComponent<EffectManager>() ?? gameObject.AddComponent<EffectManager>();
         soundManager = GetComponent<SoundManager>() ?? gameObject.AddComponent<SoundManager>();
+        playerDataManager = GetComponent<PlayerDataManager>() ?? gameObject.AddComponent<PlayerDataManager>();
+
     }
     public EffectManager EffectManager
     {
@@ -115,22 +119,25 @@ public class GameManager : MonoBehaviour
     }
     public void SelectRandomCharacter()
     {
-        int randomIndex = Random.Range(0, characters.Length); // 배열에서 랜덤한 인덱스 선택
-        GameObject selectedCharacter = characters[randomIndex]; // 선택된 캐릭터
-
-        // 선택된 캐릭터를 활성화하고, 나머지 캐릭터는 비활성화
-        for (int i = 0; i < characters.Length; i++)
+        if (activeCharacter != null)
         {
-            if (i == randomIndex)
-            {
-                characters[i].SetActive(true);
-            }
-            else
-            {
-                characters[i].SetActive(false);
-            }
+            Destroy(activeCharacter);
         }
+
+        activeCharacter = Instantiate(characterPrefab);
+
+        // 랜덤으로 캐릭터 타입 선택
+        CharacterType randomType = (CharacterType)Random.Range(0, System.Enum.GetValues(typeof(CharacterType)).Length);
+        CharacterStats baseStats = playerDataManager.GetCharacterStats(randomType);
+
+        // 활성화된 캐릭터에 스탯 복사
+        CharacterStats activeCharacterStats = activeCharacter.GetComponent<CharacterStats>();
+        activeCharacterStats.Life = baseStats.Life;
+        activeCharacterStats.Damage = baseStats.Damage;
+        activeCharacterStats.Speed = baseStats.Speed;
+        activeCharacterStats.SetTypeStats(randomType); // 타입 설정
     }
+}
     //public void GameOver()
     //{
     //    //캐릭터가 죽는 조건
