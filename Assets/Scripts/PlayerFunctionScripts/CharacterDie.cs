@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CharacterDie : CharacterController
 {
     private bool isDead = false;
-    private Vector3 fallVelocity = Vector3.zero;
+    private Vector2 fallVelocity = Vector2.zero;
     public float fallSpeed = 10f;
 
     private CharacterMovement characterMovement;
@@ -54,8 +54,14 @@ public class CharacterDie : CharacterController
             {
                 spriteRenderer.sprite = spriteImage;
             }
+            Invoke("DeactivateGameObject", 3f);
         }
     }
+    void DeactivateGameObject()
+    {
+        gameObject.SetActive(false);
+    }
+
     void GameOver()
     {
         if(stats.Life <= 0)
