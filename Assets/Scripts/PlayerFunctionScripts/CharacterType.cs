@@ -4,5 +4,6 @@ public enum CharacterType
     Normal,
     Rare,
     Unique,
-    Epic
+    Epic,
+    Max
 }

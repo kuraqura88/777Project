@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         timeRemaining = timerDuration;
         UpdateTimerUI();
-        SelectRandomCharacter(); // 시작할 때 랜덤 캐릭터 선택
+        SelectRandomCharacter(); 
 
     }
     private void Update()
@@ -90,9 +90,9 @@ public class GameManager : MonoBehaviour
         {
             timeRemaining += Time.deltaTime * speedoftime;
             UpdateTimerUI();
-            if(timeRemaining == 100)                    //스테이지 클리어 부분
+            if(timeRemaining >= 100)                    //스테이지 클리어 부분
             {
-                stageclear=true;
+                SceneManager.LoadScene("GameOverScenes");
             }
         }
         else
@@ -117,6 +117,12 @@ public class GameManager : MonoBehaviour
     {
         scoretext.text = "Score: " + score.ToString(); // 점수 텍스트를 업데이트합니다.
     }
+    // 랜덤으로 캐릭터 타입 선택하는 로직 수정
+    private CharacterType SetCharacterType()
+    {
+        return (CharacterType)Random.Range(0, (int)CharacterType.Max);
+    }
+
     public void SelectRandomCharacter()
     {
         if (activeCharacter != null)
@@ -127,7 +133,8 @@ public class GameManager : MonoBehaviour
         activeCharacter = Instantiate(characterPrefab);
 
         // 랜덤으로 캐릭터 타입 선택
-        CharacterType randomType = (CharacterType)Random.Range(0, System.Enum.GetValues(typeof(CharacterType)).Length);
+        CharacterType randomType = SetCharacterType();
+        Debug.Log(randomType);
         CharacterStats baseStats = playerDataManager.GetCharacterStats(randomType);
 
         // 활성화된 캐릭터에 스탯 복사
@@ -136,6 +143,11 @@ public class GameManager : MonoBehaviour
         activeCharacterStats.Damage = baseStats.Damage;
         activeCharacterStats.Speed = baseStats.Speed;
         activeCharacterStats.SetTypeStats(randomType); // 타입 설정
+
+        Debug.Log(activeCharacterStats.Life);
+        Debug.Log(activeCharacterStats.Damage);
+        Debug.Log( activeCharacterStats.Speed);
+
     }
 }
     //public void GameOver()

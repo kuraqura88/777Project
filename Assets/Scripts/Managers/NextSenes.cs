@@ -10,8 +10,5 @@ public class NextSenes : MonoBehaviour
     {
         SceneManager.LoadScene("GameOverScenes");
     }
-    public void ChangeSens()
-    {
-        SceneManager.LoadScene("MainSenes");
-    }
+    
 }
