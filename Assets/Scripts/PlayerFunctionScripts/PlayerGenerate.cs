@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerGenerate : MonoBehaviour
 {
-    public GameObject Player;
+    public GameObject player;
     private GameObject playerInstance;
     private Vector2 respawnPosition = new Vector2(-5, 0);
 
@@ -31,7 +31,7 @@ public class PlayerGenerate : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        playerInstance = Instantiate(Player, respawnPosition, Quaternion.identity);
+        playerInstance = Instantiate(player, respawnPosition, Quaternion.identity);
     }
 
     void RespawnPlayer()

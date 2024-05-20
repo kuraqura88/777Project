@@ -3,10 +3,9 @@ using static UnityEditor.Progress;
 
 public class PlayerController : MonoBehaviour
 {
-    CharacterStats characterStats;
+    public CharacterStats characterStats;
     void Start()
     {
-        characterStats = GetComponent<CharacterStats>();
         if (characterStats != null)
         {
             characterStats.SetTypeStats(CharacterType.Rare);
@@ -15,6 +14,10 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("캐릭터 타입이 없다.");
         }
+    }
+    public void SetCharacterStats(CharacterStats characterStats)
+    {
+        this.characterStats = characterStats;
     }
     void OnTriggerEnter2D(Collider2D other)
     {

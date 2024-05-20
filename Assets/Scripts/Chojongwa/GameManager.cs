@@ -26,13 +26,12 @@ public class GameManager : MonoBehaviour
     }
 
     public event Action onGameOver; // 게임 오버 이벤트
-
-    public GameObject characterPrefab; // 캐릭터 프리팹
-    public GameObject activeCharacter; // 활성화된 캐릭터
+    public event Action onRoulRat;
 
     private EffectManager effectManager;
     private SoundManager soundManager;
     private PlayerDataManager playerDataManager;
+    private PlayerController _player;
 
     public Text scoreText;
     private int score = 0;
@@ -71,8 +70,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerController player = Player;
         timeRemaining = timerDuration;
         UpdateTimerUI();
+
     }
 
     private void Update()
@@ -82,15 +83,14 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTimer()
     {
-        if (timeRemaining > 0)
+
+        timeRemaining -= Time.deltaTime * speedOfTime;
+        UpdateTimerUI();
+        if (timeRemaining == 100)
         {
-            timeRemaining += Time.deltaTime * speedOfTime;
-            UpdateTimerUI();
-            if (timeRemaining ==100)
-            {
-                GameOver(); // 타이머가 0에 도달하면 게임 오버 처리
-            }
+            GameOver(); // 타이머가 0에 도달하면 게임 오버 처리
         }
+
     }
 
     private void UpdateTimerUI()
@@ -115,18 +115,37 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GameOverScenes");
     }
 
-    // PlayerDataManager에서 캐릭터 스탯을 가져오는 메서드
-    public CharacterStats GetCharacterStats(CharacterType characterType)
+    public void RoulRat()
     {
-        if (playerDataManager != null)
+        onRoulRat?.Invoke();
+    }
+
+    public PlayerController Player
+    {
+        get
         {
-            Debug.Log(GetCharacterStats(characterType));
-            return playerDataManager.GetCharacterStats(characterType);
+            if (_player == null)
+            {
+                Init();
+            }
+            return _player;
         }
-        else
+        set
         {
-            Debug.LogError("PlayerDataManager reference is null.");
-            return null;
+            _player = value;
+            Debug.Log(_player.characterStats.characterType);
         }
+    }
+
+    private void Init()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+
+        if (player == null)
+        {
+            RoulRat();
+        }
+        _player = player;
+        
     }
 }

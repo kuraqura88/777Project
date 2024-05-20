@@ -18,17 +18,12 @@ public class CharacterDie : CharacterController
     private void Awake()
     {
         characterMovement = GetComponent<CharacterMovement>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
         if (characterMovement == null)
         {
             Debug.LogError("characterMovement is null.");
         }
-    }
-
-    private void Start()
-    {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
-        stats = GetComponentInChildren<CharacterStats>();
     }
     void Update()
     {

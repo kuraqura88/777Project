@@ -15,7 +15,7 @@ public class CharacterStats
         Speed = speed;
     }
 
-    public CharacterStats SetTypeStats(CharacterType characterType)
+    public void SetTypeStats(CharacterType characterType)
     {
         this.characterType = characterType; // 캐릭터 타입 설정
         switch (characterType)
@@ -43,6 +43,9 @@ public class CharacterStats
             default:
                 break;
         }
-        return this;
+    }
+    public CharacterStats()
+    {
+
     }
 }
