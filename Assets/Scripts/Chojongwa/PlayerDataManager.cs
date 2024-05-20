@@ -7,20 +7,21 @@ public class PlayerDataManager : MonoBehaviour
 
     private void Awake()
     {
-        characterStatsDictionary = new Dictionary<CharacterType, CharacterStats>
-        {
-            { CharacterType.Normal, new CharacterStats(CharacterType.Normal, 1, 1, 1) },
-            { CharacterType.Rare, new CharacterStats(CharacterType.Rare, 2, 2, 2) },
-            { CharacterType.Unique, new CharacterStats(CharacterType.Unique, 3, 3, 3) },
-            { CharacterType.Epic, new CharacterStats(CharacterType.Epic, 4, 4, 4) }
-        };
+        characterStatsDictionary = new Dictionary<CharacterType, CharacterStats>();
     }
 
+    // 캐릭터 타입에 따른 스탯을 추가하는 메소드
+    public void AddCharacterStats(CharacterType characterType, CharacterStats stats)
+    {
+        characterStatsDictionary[characterType] = stats;
+    }
+
+    // 특정 캐릭터 타입의 스탯을 반환하는 메소드
     public CharacterStats GetCharacterStats(CharacterType characterType)
     {
         if (characterStatsDictionary.TryGetValue(characterType, out var stats))
         {
-            // 스탯 복사하여 반환
+            // 캐릭터 타입에 대한 스탯 복사하여 반환
             return new CharacterStats(stats.characterType, stats.Life, stats.Damage, stats.Speed);
         }
         else
