@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerInputController : MoveController
+public class PlayerInputController : CharacterController
 {
     public void OnMove(InputValue value)
     {

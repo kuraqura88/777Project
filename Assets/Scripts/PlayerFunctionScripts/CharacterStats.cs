@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class CharacterStats : MonoBehaviour, IDamagable
+public class CharacterStats : IDamagable
 {
-    public Define.CharacterType characterType { get; }
+    public Define.CharacterType characterType { get; private set; } // 수정: private set 추가
     public int Life { get; set; }
     public int Power { get; set; }
     public int Speed { get; set; }
 
-    public CharacterStats (Define.CharacterType characterType, int life, int power, int speed)
+    public CharacterStats(Define.CharacterType characterType, int life, int power, int speed)
     {
         this.characterType = characterType;
         Life = life;
@@ -15,11 +15,10 @@ public class CharacterStats : MonoBehaviour, IDamagable
         Speed = speed;
     }
 
-    public CharacterStats SetTypeStats(Define.CharacterType characterType)
+    public void SetTypeStats(Define.CharacterType characterType)
     {
-        CharacterStats characterStats = null;
-
-        switch(characterType)
+        this.characterType = characterType; // 캐릭터 타입 설정
+        switch (characterType)
         {
             case Define.CharacterType.Normal:
                 Life = 1;
@@ -29,7 +28,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
             case Define.CharacterType.Rare:
                 Life = 2;
                 Power = 2;
-                Speed = 2; 
+                Speed = 2;
                 break;
             case Define.CharacterType.Unique:
                 Life = 3;
@@ -44,7 +43,10 @@ public class CharacterStats : MonoBehaviour, IDamagable
             default:
                 break;
         }
-        return characterStats;
+    }
+    public CharacterStats()
+    {
+
     }
 
     public bool Damage(int damage)
