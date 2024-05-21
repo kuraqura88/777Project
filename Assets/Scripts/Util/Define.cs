@@ -20,30 +20,30 @@ public class Define
         Target
     }
 
-    #endregion
-
     public enum EnemyType
     {
-        IF,
-        Switch,
+        Straight,
+        Wave,
+        UpDown,
+        Diagonal
     }
 
-    public enum CharacterType
+    public enum EnemyName
     {
-        Normal,
-        Rare,
-        Unique,
-        Epic,
-        MAX
+        If,
+        For,
+        Switch,        
+        Public
     }
 
-    #region ========== DATA ==========
-
-    public enum LoadDataType
+    public enum EnemyAttack
     {
-        None,
-        Projectiles,
+        Attack1, // 직선 공격
+        Attack2, // 3갈래 공격
+        Attack3,  // 저격 공격
+        Attack4   // 자폭 (충돌)
     }
+
     public enum Prefabs
     {
         None,
@@ -51,6 +51,4 @@ public class Define
         Enemy,
         Projectiles,
     }
-
-    #endregion
 }

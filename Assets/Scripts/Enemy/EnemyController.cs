@@ -1,38 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IDamagable
+public class EnemyController : MonoBehaviour
 {
-    EnemyPattern enemyPattern;
+    private EnemyPattern enemyPattern;
+    private Define.EnemyType type;
 
     public Define.EnemyType enemyType;
 
-    public int currentHP;
-
-    public int maxHP = 5;
+    private void Awake()
+    {
+        enemyPattern = GetComponent<EnemyPattern>();
+    }
 
     private void Start()
     {
-        currentHP = maxHP;
+        if (enemyPattern != null)
+        {
+            enemyPattern.canMove = true;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyPattern component is missing on " + gameObject.name);
+        }
     }
 
-    public bool Damage(int damage)
-    {
-        currentHP += damage;
-
-        if(currentHP <= 0)
-        {
-            Debug.Log("»ç¸Á");
-            return true;
-        }
-        
-        if(damage > 0)
-        {
-            // TODO : Èú
-            return false;
-        }
-
-        return true;
-    }
 }
