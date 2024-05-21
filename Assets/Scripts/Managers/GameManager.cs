@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -39,14 +38,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] characters;                                // 선택 가능한 캐릭터들을 담을 배열
 
-    public Text scoretext;                                         //점수 부분
+    public TextMeshProUGUI scoretext;                                         //점수 부분
     private int score = 0;
 
     public Slider slTimer;
     public float speedoftime= 50f;                               //시간 배속
     private bool stageclear=false;                                //스테이지 클리어시 작동하는 bool값
     private float timerDuration = 60f;                           // 타이머 시간 설정
-    private float timeRemaining;
+    private float timeRemaining = 0;
 
 
     public EffectManager EffectManager
@@ -92,7 +91,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    /*
+    
     private void Start()
     {
         timeRemaining = timerDuration;
@@ -105,7 +104,7 @@ public class GameManager : MonoBehaviour
         // 타이머 업데이트
         UpdateTimer();
     }
-    */
+    
     private void UpdateTimer()
     {
         if (timeRemaining > 0)
