@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class NextSenes : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     public void SensCange()
     {
