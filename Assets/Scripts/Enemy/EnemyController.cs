@@ -6,9 +6,9 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private EnemyPattern enemyPattern;
-    private Define.EnemyType type;
+    public Define.EnemyType type;
 
-    public Define.EnemyType enemyType;
+    //public Define.EnemyType enemyType;
 
     private void Awake()
     {

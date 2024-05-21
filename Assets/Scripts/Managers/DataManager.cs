@@ -34,7 +34,7 @@ public class DataManager
         EnemyController[] enemies = LoadAll<EnemyController>("", Define.Prefabs.Enemy);
         foreach (Define.EnemyType type in Enum.GetValues(typeof(Define.EnemyType)))
         {
-            EnemyController[] controller = enemies.Where(x => x.enemyType == type).ToArray();
+            EnemyController[] controller = enemies.Where(x => x.type == type).ToArray();
 
             enemyDict.Add(type, controller);
         }

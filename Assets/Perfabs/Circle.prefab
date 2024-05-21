@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7926047451738597463}
   - component: {fileID: 3285227454208201056}
   - component: {fileID: 5564868037428896210}
+  - component: {fileID: 6579683334143121223}
   m_Layer: 0
   m_Name: Circle
   m_TagString: enemyif
@@ -100,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movespeed: 1
   isStop: 0
+  canMove: 0
+  type: 0
 --- !u!114 &5564868037428896210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,3 +115,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1ce15ac9004684b9470c4860aca0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atkType: 0
+--- !u!114 &6579683334143121223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282112386665564616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4762470d2043d488aef8f39ac260a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0

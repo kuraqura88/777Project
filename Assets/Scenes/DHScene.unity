@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyprefabs:
-  - {fileID: 3285227454208201056, guid: 37b62d0b6d9f60f4ea8768d3836909d5, type: 3}
-  - {fileID: -2163601740073379980, guid: b74133ee7f749224394aa6f08e66ba76, type: 3}
-  - {fileID: -2472737370684061758, guid: feffa848beaf307418004f21ecbf6acb, type: 3}
-  - {fileID: -6570585017524578511, guid: f8654de8555dc4c4a9b895ae69be3c1a, type: 3}
+  - {fileID: 3285227454208201056, guid: 3acaa5ea84189174098e9cc91bfbf122, type: 3}
+  - {fileID: -2163601740073379980, guid: 7a830e1508505234f85f5bd62ceea598, type: 3}
+  - {fileID: -2472737370684061758, guid: ce0e8ac9f35c2ec41b0f45cff6af333d, type: 3}
+  - {fileID: -6570585017524578511, guid: 78e4233a75dd538428716be149c02594, type: 3}
 --- !u!4 &382442381
 Transform:
   m_ObjectHideFlags: 0

@@ -10,6 +10,19 @@ public class Define
         DifferenctBullet
     }
 
+    public enum CharacterType
+    {
+        Normal,
+        Rare,
+        Unique,
+        Epic,
+        MAX
+    }
+    public enum LoadDataType
+    {
+        None,
+        Projectiles,
+    }
 
     public enum AttackDirection
     {
@@ -51,4 +64,5 @@ public class Define
         Enemy,
         Projectiles,
     }
+    #endregion
 }
