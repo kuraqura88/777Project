@@ -1,77 +1,56 @@
 ﻿using UnityEngine;
 
-public class CharacterStats : IDamagable
+public class CharacterStats
 {
-    public Define.CharacterType characterType { get; private set; } // 수정: private set 추가
-    public int Life { get; set; }
-    public int Power { get; set; }
-    public int Speed { get; set; }
-
-    public CharacterStats(Define.CharacterType characterType, int life, int power, int speed)
-    {
-        this.characterType = characterType;
-        Life = life;
-        Power = power;
-        Speed = speed;
-    }
+    public int Life { get; private set; }
+    public int Power { get; private set; }
+    public float Speed { get; private set; }
 
     public void SetTypeStats(Define.CharacterType characterType)
     {
-        this.characterType = characterType; // 캐릭터 타입 설정
         switch (characterType)
         {
             case Define.CharacterType.Normal:
                 Life = 1;
                 Power = 1;
-                Speed = 1;
+                Speed = 1.0f;
                 break;
             case Define.CharacterType.Rare:
                 Life = 2;
                 Power = 2;
-                Speed = 2;
+                Speed = 2.0f;
                 break;
             case Define.CharacterType.Unique:
                 Life = 3;
                 Power = 3;
-                Speed = 3;
+                Speed = 3.0f;
                 break;
             case Define.CharacterType.Epic:
                 Life = 4;
                 Power = 4;
-                Speed = 4;
+                Speed = 4.0f;
                 break;
             default:
                 break;
         }
     }
-    public CharacterStats()
-    {
 
+    #region ========== Setter ==========
+    
+    public void SetLife(int life)
+    {
+        Life = life;
     }
 
-    public bool Damage(int damage)
+    public void SetPower(int power)
     {
-        Life += damage;
-
-        Life = Mathf.Clamp(Life, 0, 5);
-
-
-        if (Life <= 0)
-        {
-            // TOOD : 사망처리
-            return true;
-        }
-
-        if (damage >= 0)
-        {
-            // TODO : 회복 처리
-            return false;
-        }
-        else
-        {
-            // TODO : 데미지 처리
-        }
-
-        return true;
+        this.Power = power;
     }
+
+    public void SetSpeed(float speed)
+    {
+        Speed = speed;
+    }
+
+    #endregion
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class DataManager
 {
@@ -13,6 +14,8 @@ public class DataManager
 
     private Dictionary<Define.EnemyType, EnemyController[]> enemyDict = new Dictionary<Define.EnemyType, EnemyController[]>();
     
+    private Dictionary<Define.CharacterType, SpriteLibraryAsset> playerDict = new Dictionary<Define.CharacterType, SpriteLibraryAsset>();
+
     #endregion
 
     public void Init()
@@ -22,10 +25,29 @@ public class DataManager
             CreateProjectileData();
 
             CreateEnemyData();
+
+            CreatePlayerData();
         }
         catch(Exception ex)
         {
             Debug.Log(ex);
+        }
+    }
+
+    private void CreatePlayerData()
+    {
+        SpriteLibraryAsset[] asset = LoadAll<SpriteLibraryAsset>("", Define.Prefabs.Player);
+
+        foreach(Define.CharacterType type in Enum.GetValues(typeof(Define.CharacterType)))
+        {
+            for(int i = 0; i < asset.Length; i++)
+            {
+                if(Enum.GetName(typeof(Define.CharacterType), type).Equals(asset[i].name))
+                {
+                    playerDict.Add(type, asset[i]);
+                    break;
+                }
+            }
         }
     }
 
@@ -34,7 +56,7 @@ public class DataManager
         EnemyController[] enemies = LoadAll<EnemyController>("", Define.Prefabs.Enemy);
         foreach (Define.EnemyType type in Enum.GetValues(typeof(Define.EnemyType)))
         {
-            EnemyController[] controller = enemies.Where(x => x.enemyType == type).ToArray();
+            EnemyController[] controller = enemies.Where(x => x.type == type).ToArray();
 
             enemyDict.Add(type, controller);
         }
@@ -104,6 +126,16 @@ public class DataManager
         }
         return null;
     }
+
+    public SpriteLibraryAsset GetPlayerData(Define.CharacterType type)
+    {
+        if(playerDict.TryGetValue(type, out var playerData))
+        {
+            return playerData;
+        }
+        return null;
+    }
+
     #endregion
 
 }

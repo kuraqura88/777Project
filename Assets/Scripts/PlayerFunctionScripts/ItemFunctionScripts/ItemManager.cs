@@ -10,7 +10,7 @@ public class ItemManager : MonoBehaviour
     {
         if (characterStats == null )
         {
-            Debug.LogError("null");
+            Debug.Log("null");
         }
     }
     public void ApplyItemEffect (itemType itemType)

@@ -25,40 +25,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public event Action onGameOver; // 게임 오버 이벤트
-    public event Action onRoulRat;
+    #region ========== Option ==========
 
     private EffectManager effectManager;
     private SoundManager soundManager;
     private DataManager dataManager;
 
-    private PlayerDataManager playerDataManager;
     private PlayerController _player;
-
-    public Text scoreText;
-    private int score = 0;
-
-    public Slider slTimer;
-    public float speedOfTime = 50f;
-    private float timerDuration = 60f;
-    private float timeRemaining;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-
-        effectManager = GetComponent<EffectManager>() ?? gameObject.AddComponent<EffectManager>();
-        soundManager = GetComponent<SoundManager>() ?? gameObject.AddComponent<SoundManager>();
-        playerDataManager = GetComponent<PlayerDataManager>() ?? gameObject.AddComponent<PlayerDataManager>();
-    }
 
     public EffectManager EffectManager
     {
@@ -81,9 +54,127 @@ public class GameManager : MonoBehaviour
             return dataManager;
         }
     }
+
+    public PlayerController Player
+    {
+        get
+        {
+            if (_player == null)
+            {
+                Init();
+            }
+            return _player;
+        }
+
+    }
+    public Define.Scene scene = Define.Scene.BasicStage;
+
+    private void Init()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+
+        if (player == null)
+        {
+            GameObject go = Data.Load<GameObject>("Player", Define.Prefabs.Player);
+            Instantiate(go, new Vector3(-7f, 0, 0), Quaternion.identity).name = "Player";
+
+            player = go.GetComponentInChildren<PlayerController>();
+
+            if(go == null)
+            {
+                Debug.Log("플레이어의 데이터가 존재하지 않습니다");
+            }
+            else
+            {
+                
+                RoulRat(player);
+            }
+        }
+        _player = player;
+
+    }
+    #endregion
+
+
+    #region ========== Event Action ==========
+
+    public event Action<PlayerController> OnRoulRat;
+
+    public event Action<Define.Scene> OnGameStart;
+
+    public event Action OnAppearBoss;
+
+    public event Action OnGameClear;
+
+    public event Action OnGameOver;
+
+    public void RoulRat(PlayerController controller)
+    {
+        OnRoulRat?.Invoke(controller);
+    }
+
+    public void GameStart(Define.Scene scene)
+    {
+        isStart = true;
+        this.scene = scene;
+        mainSceneUI.SetActive(true);
+        OnGameStart?.Invoke(scene);
+    }
+
+    public void AppearBoss()
+    {
+        OnAppearBoss?.Invoke();
+    }
+
+    public void GameClear()
+    {
+        OnGameClear?.Invoke();
+    }
+
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
+    }
+
+    #endregion
+
+
+    #region ========= Fields ==========
+    private bool isStart = false;
+
+    public GameObject mainSceneUI;
+
+    public Text scoreText;
+    private int score = 0;
+
+    public Slider slTimer;
+    public float speedOfTime = 50f;
+    private float timerDuration = 60f;
+    private float timeRemaining;
+
+    #endregion
+
+
+    #region ========== Life Cycle ==========
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        effectManager = GetComponent<EffectManager>() ?? gameObject.AddComponent<EffectManager>();
+        soundManager = GetComponent<SoundManager>() ?? gameObject.AddComponent<SoundManager>();
+    }
+
     private void Start()
     {
-        PlayerController player = Player;
         timeRemaining = timerDuration;
         UpdateTimerUI();
 
@@ -91,24 +182,46 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateTimer();
+        if(isStart && (scene == Define.Scene.BasicStage || scene == Define.Scene.StandardStage || scene == Define.Scene.ChallangeStage))
+        {
+            UpdateTimer();
+        }
     }
+
+    #endregion
+
+
+    #region ========== Method ==========
 
     private void UpdateTimer()
     {
-
         timeRemaining -= Time.deltaTime * speedOfTime;
         UpdateTimerUI();
-        if (timeRemaining == 100)
-        {
-            GameOver(); // 타이머가 0에 도달하면 게임 오버 처리
-        }
-
     }
 
     private void UpdateTimerUI()
     {
         slTimer.value = 1 - (timeRemaining / timerDuration); // 슬라이더 값을 역으로 설정하여 남은 시간 표시
+
+        if(slTimer.value >= 0.99f)
+        {
+            isStart = false;
+            if (scene == Define.Scene.BasicStage)
+            {
+                scene = Define.Scene.BasicStage;
+            }
+            else if(scene == Define.Scene.StandardStage)
+            {
+                scene = Define.Scene.StandardBossStage;
+
+            }
+            else if(scene == Define.Scene.ChallangeStage)
+            {
+                scene = Define.Scene.ChallangeBossStage;
+
+            }
+            AppearBoss();
+        }
     }
 
     public void Score()
@@ -122,43 +235,6 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
     }
 
-    public void GameOver()
-    {
-        onGameOver?.Invoke(); // 게임 오버 이벤트 호출
-        SceneManager.LoadScene("GameOverScenes");
-    }
+    #endregion
 
-    public void RoulRat()
-    {
-        onRoulRat?.Invoke();
-    }
-
-    public PlayerController Player
-    {
-        get
-        {
-            if (_player == null)
-            {
-                Init();
-            }
-            return _player;
-        }
-        set
-        {
-            _player = value;
-            Debug.Log(_player.characterStats.characterType);
-        }
-    }
-
-    private void Init()
-    {
-        PlayerController player = FindObjectOfType<PlayerController>();
-
-        if (player == null)
-        {
-            RoulRat();
-        }
-        _player = player;
-        
-    }
 }

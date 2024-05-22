@@ -5,21 +5,35 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     CharacterController controller;
+
     protected Rigidbody2D rb;
 
     Vector2 movementDirection = Vector2.zero;
 
     public float speed = 5;
     public bool isDead = false;
+    
+    private bool isStart = false;
+
+    private bool isHit = false;
 
     protected void Awake()
     {
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody2D>();
     }
-    private void Start()
+    private void OnEnable()
     {
         controller.OnMoveEvent += Move;
+
+        GameManager.Instance.OnGameStart += CanMove;
+    }
+
+    private void OnDisable()
+    {
+        controller.OnMoveEvent -= Move;
+
+        GameManager.Instance.OnGameStart -= CanMove;
     }
 
     void Move(Vector2 direction)
@@ -29,19 +43,26 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isDead) // 죽었을 때는 이동하지 않음
+        if (isStart)
         {
-            ApplyMovement(movementDirection);
+            if(!isHit)
+            {
+                ApplyMovement(movementDirection);
+            }
         }
     }
+    
     void ApplyMovement(Vector2 direction)
     {
         direction *= speed;
         rb.velocity = direction;
     }
-    public void Die(Vector2 fallVelocity)
+
+    private void CanMove(Define.Scene scene)
     {
-        isDead = true;
-        rb.velocity = fallVelocity; // 죽었을 때의 추락 속도를 설정
+        if(scene != Define.Scene.Start || scene != Define.Scene.ClearStage || scene != Define.Scene.GameoverStage)
+        {
+            isStart = true;
+        }
     }
 }

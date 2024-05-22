@@ -1,36 +1,53 @@
 ﻿using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.U2D.Animation;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterStats characterStats;
-    void Start()
+    public StatusHandler statusHandler;
+
+    public SpriteLibrary library;
+
+    public Animator animator;
+    public SpriteResolver spriteResolver;
+
+
+    public void ChangeStutus(CharacterStats stat)
     {
-        if (characterStats != null)
+        if(stat != null)
+            statusHandler.SetCharacterStat(stat);
+    }
+
+    public void ChangeCharacter(SpriteLibraryAsset asset)
+    {
+        if (library != null)
         {
-            characterStats.SetTypeStats(Define.CharacterType.Rare);
+            if (asset != null)
+            {
+                library.spriteLibraryAsset = asset;
+
+                Debug.Log(asset.name);
+                if(library.spriteLibraryAsset == asset)
+                {
+                    Debug.Log("성공");
+                }
+            }
+            else
+            {
+                Debug.Log("에셋이 없습니다");
+            }
         }
         else
         {
-            Debug.LogError("캐릭터 타입이 없다.");
+            Debug.Log("라이브러리가 없습니다");
         }
     }
-    public void SetCharacterStats(CharacterStats characterStats)
+    public void RefreshCharacter()
     {
-        this.characterStats = characterStats;
+        library.RefreshSpriteResolvers();
     }
-    void OnTriggerEnter2D(Collider2D other)
+
+    public void Enter()
     {
-        if (other.gameObject.CompareTag("Item"))
-        {
-            // 아이템 타입을 얻어옴 (예: 아이템의 스크립트에서 itemType 필드를 가져오는 방식)
-            itemType itemType = other.GetComponent<Item>().type;
-
-            // 아이템 효과를 적용
-            GetComponent<ItemManager>().ApplyItemEffect(itemType);
-
-            // 아이템 제거
-            Destroy(other.gameObject);
-        }
+        Debug.Log("등장");
     }
 }

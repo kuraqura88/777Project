@@ -1,27 +1,104 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // 사운드 관련 변수 및 메서드 추가
-    public void LaunchSound(string soundName)
-    {
-        // 사운드 재생 로직 구현
-        Debug.Log("이펙트 생성");
-    }
-    public void BackGroundSound(string soundName)
-    {
-        Debug.Log("배경음악 생성");
+    #region BGM
 
-    }
-    public void DamageSound(string soundName)
-    {
-        Debug.Log("피격 사운드 생성");
+    private AudioSource bgm;
 
+    public AudioClip startBgm;
+    public AudioClip basicBgm;
+    public AudioClip standardBgm;
+    public AudioClip challangeBgm;
+    public AudioClip clearBgm;
+    public AudioClip gameoverBgm;
+
+    public AudioClip basicBossBgm;
+    public AudioClip standardBossBgm;
+    public AudioClip challangeBossBgm;
+
+    #endregion
+
+
+    #region Effect
+
+    private AudioSource effect;
+
+    public AudioClip clearEffect;
+
+    public AudioClip failedEffect;
+
+    public AudioClip enemyHitEffect;
+
+    public AudioClip playerHitEffect;
+
+    public AudioClip deadEffect;
+
+
+    #endregion
+    private void Awake()
+    {
+        bgm = transform.AddComponent<AudioSource>();
+        bgm.playOnAwake = false;
+        effect = transform.AddComponent<AudioSource>();
+        effect.playOnAwake = false;
     }
 
-    public void SetVolume(float volume)
+    private void OnEnable()
     {
-        // 사운드 볼륨 조절 로직 구현
-        Debug.Log("사운드 볼륨 조절 생성");
+        GameManager.Instance.OnGameStart += PlayBGM;
+        
+    }
+
+    public void PlayBGM(Define.Scene stage)
+    {
+        bgm.loop = true;
+
+        bgm.Stop();
+
+        switch (stage)
+        {
+            case Define.Scene.Start:
+                bgm.clip = startBgm;
+                break;
+
+            case Define.Scene.BasicStage:
+                bgm.clip = basicBgm;
+                break;
+            case Define.Scene.StandardStage:
+                bgm.clip = standardBgm;
+                break;
+
+            case Define.Scene.ChallangeStage:
+                bgm.clip = challangeBgm;
+                break;
+
+            case Define.Scene.BasicBossStage:
+                bgm.clip = basicBossBgm;
+
+                break;
+
+            case Define.Scene.StandardBossStage:
+                bgm.clip = standardBossBgm;
+
+                break;
+
+            case Define.Scene.ChallangeBossStage:
+                bgm.clip = challangeBossBgm;
+
+                break;
+            case Define.Scene.ClearStage:
+                bgm.clip = clearBgm;
+                break;
+
+            case Define.Scene.GameoverStage:
+                bgm.clip = gameoverBgm;
+                break;
+        }
+        bgm.volume = 0.5f;
+        bgm.Play();
     }
 }
