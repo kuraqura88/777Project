@@ -126,7 +126,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7093f69c7ab531418912c04bdedc850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusHandler: {fileID: 0}
   attackSO: {fileID: 11400000, guid: 85dbdfeafc82ee342860a0a158c82928, type: 2}
   delay: 0.2
   speed: 100
@@ -249,7 +250,7 @@ MonoBehaviour:
   numberOfProjectilesPerShot: 1
   projectilesAngleSpace: 10
   spreadAngle: 1
-  projectileRoot: {fileID: 2012967818560511491}
+  projectileRoot: {fileID: 0}
   radius: 10
 --- !u!114 &1912684592335006271
 MonoBehaviour:
@@ -278,7 +279,8 @@ MonoBehaviour:
   statusHandler: {fileID: 2913658671622457253}
   library: {fileID: 5905677032964841427}
   animator: {fileID: 6339170267515582502}
-  spriteResolver: {fileID: 3678147592359028081}
+  Root: {fileID: 1860476231724773029}
+  movement: {fileID: 6796715036533620450}
 --- !u!114 &2913658671622457253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef2dd3f274ab6e4eb441bccd7468458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!114 &6796715036533620450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,8 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 0.009161512
+  m_labelHash: 2.4845267e-36
   m_SpriteKey: 0
   m_SpriteHash: 484346413
 --- !u!114 &5905677032964841427

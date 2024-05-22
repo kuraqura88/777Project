@@ -9,11 +9,8 @@ public class DataManager
 {
     #region ========== Caching Data ==========
 
-    // Projectiles Data
     private Dictionary<string, Projectile> projectileDict = new Dictionary<string, Projectile>();
 
-    private Dictionary<Define.EnemyType, EnemyController[]> enemyDict = new Dictionary<Define.EnemyType, EnemyController[]>();
-    
     private Dictionary<Define.CharacterType, SpriteLibraryAsset> playerDict = new Dictionary<Define.CharacterType, SpriteLibraryAsset>();
 
     #endregion
@@ -23,8 +20,6 @@ public class DataManager
         try
         {
             CreateProjectileData();
-
-            CreateEnemyData();
 
             CreatePlayerData();
         }
@@ -51,16 +46,6 @@ public class DataManager
         }
     }
 
-    private void CreateEnemyData()
-    {
-        EnemyController[] enemies = LoadAll<EnemyController>("", Define.Prefabs.Enemy);
-        foreach (Define.EnemyType type in Enum.GetValues(typeof(Define.EnemyType)))
-        {
-            EnemyController[] controller = enemies.Where(x => x.type == type).ToArray();
-
-            enemyDict.Add(type, controller);
-        }
-    }
 
     private void CreateProjectileData()
     {
@@ -108,21 +93,13 @@ public class DataManager
         return Resources.LoadAll<T>(path);
     }
 
+
     #region ========== Get Data Method ===========
     public Projectile GetProjectile(string name)
     {
         if(projectileDict.TryGetValue(name, out Projectile projectile))
         {
             return projectile;
-        }
-        return null;
-    }
-
-    public EnemyController[] GetEnemyData(Define.EnemyType enemyType)
-    {
-        if(enemyDict.TryGetValue(enemyType, out var enemies))
-        {
-            return enemies;
         }
         return null;
     }

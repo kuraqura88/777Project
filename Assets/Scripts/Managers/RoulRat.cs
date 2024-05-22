@@ -102,7 +102,20 @@ public class RoulRat : MonoBehaviour
 
             yield return new WaitUntil(() => isFinished);
 
-            GameManager.Instance.GameStart(Define.Scene.BasicStage);
+            if(GameManager.Instance.stage == Define.Scene.BasicStage)
+            {
+                GameManager.Instance.GameStart(Define.Scene.BasicStage);
+
+            }
+            else if(GameManager.Instance.stage == Define.Scene.StandardStage)
+            {
+                GameManager.Instance.GameStart(Define.Scene.StandardStage);
+
+            }
+            else if (GameManager.Instance.stage == Define.Scene.ChallangeStage)
+            {
+                GameManager.Instance.GameStart(Define.Scene.ChallangeStage);
+            }
 
             gameObject.SetActive(false);
         }

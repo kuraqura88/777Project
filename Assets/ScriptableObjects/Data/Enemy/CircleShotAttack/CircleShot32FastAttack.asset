@@ -20,7 +20,7 @@ MonoBehaviour:
   target:
     serializedVersion: 2
     m_Bits: 64
-  attackSound: {fileID: 0}
-  numberOfProjectilesPerShot: 32
-  projectilesAngleSpace: 11.25
-  spreadAngle: 0
+  attackSound: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
+  numberOfProjectilesPerShot: 16
+  projectilesAngleSpace: 22.5
+  spreadAngle: 0.25

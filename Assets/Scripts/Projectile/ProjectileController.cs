@@ -1,11 +1,13 @@
 using System;
-
+using System.Net;
 using UnityEngine;
+
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
 public class ProjectileController : MonoBehaviour
 {
+    public StatusHandler statusHandler;
     private AudioSource aSource = null;
     private AudioClip shootSound = null;
 
@@ -64,6 +66,7 @@ public class ProjectileController : MonoBehaviour
 
     private void Awake()
     {
+        statusHandler = GetComponent<StatusHandler>();
         aSource = GetComponent<AudioSource>();
     }
 
@@ -85,11 +88,24 @@ public class ProjectileController : MonoBehaviour
 
     private void OnEnable()
     {
+        EnemyRespawn.OnSpawn += EnemyCanAttack;
         GameManager.Instance.OnGameStart += CanAttack;
+        GameManager.Instance.OnAppearBoss += StopAttack;
+        GameManager.Instance.OnFightBoss += CanAttack;
+        GameManager.Instance.OnGameOver += StopAttack;
+        GameManager.Instance.OnGameClear += StopAttack;
+        statusHandler.OnHit += ControlAttack;
     }
     private void OnDisable()
     {
+        EnemyRespawn.OnSpawn -= EnemyCanAttack;
+
         GameManager.Instance.OnGameStart -= CanAttack;
+        GameManager.Instance.OnAppearBoss -= StopAttack;
+        GameManager.Instance.OnFightBoss -= CanAttack;
+        GameManager.Instance.OnGameClear -= StopAttack;
+        statusHandler.OnHit -= ControlAttack;
+
     }
 
     private void Update()
@@ -104,6 +120,24 @@ public class ProjectileController : MonoBehaviour
             }
         }
     }
+
+    private void StopAttack() => isStart = false;
+    private void ControlAttack(bool active)
+    {
+        if (statusHandler.type == Define.EntityType.Player)
+        {
+            isStart = false;
+            Invoke(nameof(CanAttack), 2.5f);
+        }
+
+    }
+
+    private void EnemyCanAttack()
+    {
+        isStart = true;
+    }
+
+    private void CanAttack() => isStart = true;
 
     private void CanAttack(Define.Scene scene)
     {
@@ -160,8 +194,20 @@ public class ProjectileController : MonoBehaviour
                 
                 if (hit == null) 
                     isAttack = false;
-                else 
-                    aimDirection = (hit.transform.position - transform.position).normalized;
+                else
+                {
+                    if(projectileRoot == null)
+                    {
+                        aimDirection = (hit.transform.position - transform.position).normalized;
+
+                    }
+                    else
+                    {
+                        aimDirection = (hit.transform.position - projectileRoot.position).normalized;
+
+                    }
+
+                }
 
                 break;
         }
@@ -181,6 +227,7 @@ public class ProjectileController : MonoBehaviour
                 float randomSpread = Random.Range(-spreadAngle, spreadAngle);
                 angle += randomSpread;
                 CreateProjectile(angle);
+                
             }
         }
     }
@@ -190,14 +237,28 @@ public class ProjectileController : MonoBehaviour
     public void CreateProjectile(float angle)
     {
         string name = Enum.GetName(typeof(Define.Projectile), (int)projectileType);
-
-        Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject, projectileRoot);
-
-        if (projectile != null)
+        if(projectileRoot == null)
         {
-            projectile.transform.position = transform.position;
-            projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject);
+
+            if (projectile != null)
+            {
+                projectile.transform.position = transform.position;
+                projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            }
         }
+        else
+        {
+            Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject, projectileRoot);
+
+            if (projectile != null)
+            {
+                projectile.transform.position = projectileRoot.position;
+                projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            }
+        }
+
+
     }
 
     private Vector2 RotateVector2(Vector2 v, float angle)

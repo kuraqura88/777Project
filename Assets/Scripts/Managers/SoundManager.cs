@@ -54,51 +54,55 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(Define.Scene stage)
     {
-        bgm.loop = true;
-
-        bgm.Stop();
-
-        switch (stage)
+        if(bgm != null)
         {
-            case Define.Scene.Start:
-                bgm.clip = startBgm;
-                break;
+            bgm.loop = true;
 
-            case Define.Scene.BasicStage:
-                bgm.clip = basicBgm;
-                break;
-            case Define.Scene.StandardStage:
-                bgm.clip = standardBgm;
-                break;
+            bgm.Stop();
 
-            case Define.Scene.ChallangeStage:
-                bgm.clip = challangeBgm;
-                break;
+            switch (stage)
+            {
+                case Define.Scene.Start:
+                    bgm.clip = startBgm;
+                    break;
 
-            case Define.Scene.BasicBossStage:
-                bgm.clip = basicBossBgm;
+                case Define.Scene.BasicStage:
+                    bgm.clip = basicBgm;
+                    break;
+                case Define.Scene.StandardStage:
+                    bgm.clip = standardBgm;
+                    break;
 
-                break;
+                case Define.Scene.ChallangeStage:
+                    bgm.clip = challangeBgm;
+                    break;
 
-            case Define.Scene.StandardBossStage:
-                bgm.clip = standardBossBgm;
+                case Define.Scene.BasicBossStage:
+                    bgm.clip = basicBossBgm;
 
-                break;
+                    break;
 
-            case Define.Scene.ChallangeBossStage:
-                bgm.clip = challangeBossBgm;
+                case Define.Scene.StandardBossStage:
+                    bgm.clip = standardBossBgm;
 
-                break;
-            case Define.Scene.ClearStage:
-                bgm.clip = clearBgm;
-                break;
+                    break;
 
-            case Define.Scene.GameoverStage:
-                bgm.clip = gameoverBgm;
-                break;
+                case Define.Scene.ChallangeBossStage:
+                    bgm.clip = challangeBossBgm;
+
+                    break;
+                case Define.Scene.ClearStage:
+                    bgm.clip = clearBgm;
+                    break;
+
+                case Define.Scene.GameoverStage:
+                    bgm.clip = gameoverBgm;
+                    break;
+            }
+            bgm.volume = 0.5f;
+            bgm.Play();
         }
-        bgm.volume = 0.5f;
-        bgm.Play();
+
     }
 
     public void StopBGM()

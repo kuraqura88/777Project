@@ -117,6 +117,8 @@ public class PoolManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(Instance.gameObject);
+
+        GameManager.Instance.Data.Init();
     }
 
 
@@ -193,5 +195,10 @@ public class PoolManager : MonoBehaviour
             CreatePool<T>(original);
         }
         return ((Pool<T>)poolDict[key]).Pop(parent);
+    }
+
+    public void AllReset()
+    {
+
     }
 }

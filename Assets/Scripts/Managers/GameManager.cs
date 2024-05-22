@@ -6,7 +6,9 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public Define.Scene scene = Define.Scene.BasicStage;
+    public Define.Scene scene = Define.Scene.Start;
+
+    public Define.Scene stage = Define.Scene.BasicStage;
 
 
     private static GameManager instance;
@@ -114,6 +116,9 @@ public class GameManager : MonoBehaviour
 
     public event Action OnAppearBoss;
 
+    public event Action OnFightBoss;
+
+
     public event Action OnGameClear;
 
     public event Action OnGameOver;
@@ -127,6 +132,8 @@ public class GameManager : MonoBehaviour
     {
         isStart = true;
         this.scene = scene;
+        timeRemaining = timerDuration;
+        slTimer.value = 0;
         mainSceneUI.SetActive(true);
 
         OnGameStart?.Invoke(scene);
@@ -137,6 +144,11 @@ public class GameManager : MonoBehaviour
         OnAppearBoss?.Invoke();
     }
 
+    public void FightBoss()
+    {
+        OnFightBoss?.Invoke();
+    }
+
     public void GameClear()
     {
         OnGameClear?.Invoke();
@@ -144,6 +156,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("게임오버");
         OnGameOver?.Invoke();
     }
 
@@ -151,6 +164,7 @@ public class GameManager : MonoBehaviour
 
 
     #region ========= Fields ==========
+
     private bool isStart = false;
 
     public GameObject mainSceneUI;
@@ -189,6 +203,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+
     private void Start()
     {
         timeRemaining = timerDuration;
@@ -207,6 +234,11 @@ public class GameManager : MonoBehaviour
 
     #region ========== Method ==========
 
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        mainSceneUI.SetActive(false);
+    }
+
     private void UpdateTimer()
     {
         timeRemaining -= Time.deltaTime * speedOfTime;
@@ -222,7 +254,7 @@ public class GameManager : MonoBehaviour
             isStart = false;
             if (scene == Define.Scene.BasicStage)
             {
-                scene = Define.Scene.BasicStage;
+                scene = Define.Scene.BasicBossStage;
             }
             else if(scene == Define.Scene.StandardStage)
             {
@@ -238,17 +270,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Score()
+    public void Score(int score)
     {
-        score += 10;
+        this.score += score;
         UpdateScoreUI();
     }
 
     private void UpdateScoreUI()
     {
-        scoreText.text = "Score: " + score.ToString();
+        scoreText.text = score.ToString();
     }
 
+    public int GetScore()
+    {
+        return score;
+    }
     #endregion
 
 }

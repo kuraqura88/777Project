@@ -23,6 +23,7 @@ public class EnemyPattern : MonoBehaviour
         float randomY = Random.Range(4f, -4f);
         targetPosition = new Vector2(randomX, randomY);
     }
+
     private void Update()
     {
         if (canMove)
@@ -53,15 +54,13 @@ public class EnemyPattern : MonoBehaviour
     }
 
 
-
+    public void CanMove() => canMove = true;
     private void MovePattern1()
     {
-        Debug.Log("패턴1");
         transform.position += Vector3.left * movespeed * Time.deltaTime;
     }
     private void MovePattern2()
     {
-        Debug.Log("패턴2");
         float amplitude = 20.0f;
         float frequency = 5.0f;
         float sinWave = Mathf.Sin(Time.time * frequency) * amplitude;
@@ -75,7 +74,6 @@ public class EnemyPattern : MonoBehaviour
     private Vector3 currentDirection = Vector3.down;
     private void MovePattern3()
     {
-        Debug.Log("패턴3");
         if (currentDirection == Vector3.up && transform.position.y > 6f)
         {
             currentDirection = Vector3.down;
@@ -89,7 +87,6 @@ public class EnemyPattern : MonoBehaviour
     }
     private void MovePattern4()
     {
-        Debug.Log("패턴4");
         float step = movespeed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
     }

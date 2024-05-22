@@ -5,6 +5,12 @@ using UnityEngine;
 public class StatusHandler : MonoBehaviour, IDamagable
 {
     public event Action<bool> OnHit;
+    public event Action OnDead;
+
+    public Define.EntityType type;
+
+    public int score = 0;
+
     public Define.CharacterType characterType { get; private set; }
 
     public CharacterStats CurrentStat { get; private set; }
@@ -31,7 +37,12 @@ public class StatusHandler : MonoBehaviour, IDamagable
 
         if(CurrentLife <= 0)
         {
-            // TODO : »ç¸Á Ã³¸®
+            if(type == Define.EntityType.Enemy)
+            {
+                GameManager.Instance.Score(score);
+            }
+            Debug.Log("»ç¸Á");
+            Dead();
             return true;
         }
         
@@ -46,5 +57,10 @@ public class StatusHandler : MonoBehaviour, IDamagable
         }
 
         return false;
+    }
+
+    public void Dead()
+    {
+        OnDead?.Invoke();
     }
 }

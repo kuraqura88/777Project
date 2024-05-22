@@ -1,5 +1,7 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,6 +18,9 @@ public class Projectile : MonoBehaviour
     public SpriteRenderer spRenderer;
     public GameObject hitObj;
 
+    public AudioSource audioSource;
+    public AudioClip hitSound;
+
     private bool isHit = false;
 
     private void Awake()
@@ -27,7 +32,11 @@ public class Projectile : MonoBehaviour
         spRenderer.enabled = true;
         hitObj.SetActive(false);
         isHit = false;
+
+        SceneManager.sceneLoaded += OnLoadedScene;
     }
+
+
     private void FixedUpdate()
     {
         Shoot();
@@ -38,6 +47,12 @@ public class Projectile : MonoBehaviour
         this.direction = direction;
         this.speed = speed;
         this.target = target;
+
+        spRenderer.flipX = direction.x < 0;
+    }
+    private void OnLoadedScene(Scene arg0, LoadSceneMode arg1)
+    {
+        PoolManager.Instance.Push<Projectile>(this);
     }
 
     public void Shoot()
@@ -55,6 +70,11 @@ public class Projectile : MonoBehaviour
             
             if(damagable != null)
             {
+                if(audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+                audioSource.PlayOneShot(hitSound, 0.5f);
                 damagable.Damage(-1);
                 isHit = true;
                 _rb2d.velocity = Vector2.zero;

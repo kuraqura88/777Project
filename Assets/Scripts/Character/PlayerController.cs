@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.U2D.Animation;
 
 public class PlayerController : MonoBehaviour
@@ -8,8 +9,27 @@ public class PlayerController : MonoBehaviour
     public SpriteLibrary library;
 
     public Animator animator;
-    public SpriteResolver spriteResolver;
 
+    public GameObject Root;
+
+    private readonly int hashDead = Animator.StringToHash("IsDead");
+
+    private readonly int hashHit = Animator.StringToHash("IsHit");
+    [SerializeField]
+    private CharacterMovement movement;
+
+    private void OnEnable()
+    {
+        statusHandler.OnHit += OnHit;
+        statusHandler.OnDead += OnDead;
+    }
+
+
+    private void OnDisable()
+    {
+        statusHandler.OnHit -= OnHit;
+        statusHandler.OnDead -= OnDead;
+    }
 
     public void ChangeStutus(CharacterStats stat)
     {
@@ -24,12 +44,6 @@ public class PlayerController : MonoBehaviour
             if (asset != null)
             {
                 library.spriteLibraryAsset = asset;
-
-                Debug.Log(asset.name);
-                if(library.spriteLibraryAsset == asset)
-                {
-                    Debug.Log("성공");
-                }
             }
             else
             {
@@ -49,5 +63,26 @@ public class PlayerController : MonoBehaviour
     public void Enter()
     {
         Debug.Log("등장");
+    }
+
+    private void OnHit(bool active)
+    {
+        animator.SetTrigger(hashHit);
+
+    }
+
+    private void OnDead()
+    {
+        animator.SetBool(hashDead, true);
+
+        Invoke(nameof(Dead), 1f);
+    }
+
+    private void Dead()
+    {
+        GameManager.Instance.GameOver();
+
+        Destroy(Root);
+
     }
 }

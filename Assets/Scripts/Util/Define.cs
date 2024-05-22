@@ -1,5 +1,10 @@
 public class Define
 {
+    public enum EntityType
+    {
+        Player,
+        Enemy
+    }
     #region ========== PROJECTILES ==========
 
     public enum Projectile
@@ -59,12 +64,20 @@ public class Define
         Public
     }
 
+
     public enum EnemyAttack
     {
         Straight, // 직선 공격
         Sector, // 3갈래 공격
         Targetting,  // 저격 공격
         Suicide   // 자폭 (충돌)
+    }
+
+    public enum BossType
+    {
+        Basic,
+        Standard,
+        Challange
     }
 
     #endregion
@@ -89,6 +102,7 @@ public class Define
     public enum Scene
     {
         Start,
+        FirstCutScene,
         BasicStage,
         StandardStage,
         ChallangeStage,
@@ -96,6 +110,7 @@ public class Define
         GameoverStage,
         BasicBossStage,
         StandardBossStage,
-        ChallangeBossStage
+        ChallangeBossStage,
+        AllClear
     }
 }
