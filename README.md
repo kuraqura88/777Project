@@ -12,9 +12,10 @@
 ## 게임 설명
 
 
-|![image (1)](https://github.com/kuraqura88/777Project/assets/167050509/2119c2e6-8d20-446c-999b-59d2d0c2d2e7)|![녹음-2024-05-22-102936](https://github.com/kuraqura88/777Project/assets/167050509/0f664bda-9cec-4ecd-9b98-ebae25b0de5b)|
-|:---:|:---:|
-|**게임 시작 화면**|**랜덤 캐릭터 생성**|
+
+|![image (1)](https://github.com/kuraqura88/777Project/assets/167050509/2119c2e6-8d20-446c-999b-59d2d0c2d2e7)|![녹음-2024-05-22-102936](https://github.com/kuraqura88/777Project/assets/167050509/0f664bda-9cec-4ecd-9b98-ebae25b0de5b)|![CharacterMoving (1)](https://github.com/kuraqura88/777Project/assets/167050509/9fb03c4b-02f2-4e5e-8412-5b09a264b823)|
+|:---:|:---:|:---:|
+|**게임 시작 화면**|**랜덤 캐릭터 생성**|**생성된 캐릭터**|
 
 - 게임 시작 버튼을 눌러 실행할 수 있습니다. 바로 다음 화면에서 슬롯을 통해 랜덤한 캐릭터가 생성됩니다.
 
