@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Shoot
+    m_Hash: 830854074
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Shoot01
+      m_Hash: 246501615
+      m_Sprite: {fileID: 21300000, guid: d1f05b244d70d5445abb25cde32f6f9f, type: 2}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 21300000, guid: 4465a6e6f240cf8439f69b06aff918c7, type: 2}
+    - m_Name: Shoot02
+      m_Hash: 397934933
+      m_Sprite: {fileID: 21300000, guid: c17f275ea5e2a984ba9363dfd0ee1d0f, type: 2}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 21300000, guid: 1078819250fb0dd43b98c1e3abb1a264, type: 2}
+    - m_Name: Shoot03
+      m_Hash: 549401027
+      m_Sprite: {fileID: 21300000, guid: 60c32d376a2538f4880e45a897668ed6, type: 2}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 21300000, guid: f44455b9718606a47b8df3a2a5961d46, type: 2}
+    - m_Name: Shoot04
+      m_Hash: 1054581856
+      m_Sprite: {fileID: 21300000, guid: 9e88693f662941141902361009b5d5a5, type: 2}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 21300000, guid: ac7e17c2d6358eb4482447320c7d5b64, type: 2}
+    m_FromMain: 1
+    m_EntryOverrideCount: 4
+  m_PrimaryLibraryGUID: 028fa07bcd91ad740ae70a8a248cfa3f
+  m_ModificationHash: 638519863338523542
+  m_Version: 1

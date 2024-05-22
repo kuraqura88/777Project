@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MainScene : MonoBehaviour
 {
-
     public GameObject basicBoss;
     public GameObject standardBoss;
     public GameObject challangeBoss;

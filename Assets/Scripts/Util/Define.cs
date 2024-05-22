@@ -4,10 +4,9 @@ public class Define
 
     public enum Projectile
     {
-        Normal,
-        BigProjectile,
-        TriangleBullet,
-        DifferenctBullet
+        RedBullet,
+        BlueBullet,
+        PurpleBullet
     }
 
     public enum AttackDirection

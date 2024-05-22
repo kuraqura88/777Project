@@ -9,6 +9,7 @@ public class StatusHandler : MonoBehaviour, IDamagable
 
     public CharacterStats CurrentStat { get; private set; }
 
+
     public int CurrentLife { get; private set; }
 
     public void SetCharacterStat(CharacterStats characterStat)
@@ -20,6 +21,7 @@ public class StatusHandler : MonoBehaviour, IDamagable
     
     public void Hit(bool isHit)
     {
+        Debug.Log("데미지를 입었습니다.");
         OnHit?.Invoke(isHit);
     }
 

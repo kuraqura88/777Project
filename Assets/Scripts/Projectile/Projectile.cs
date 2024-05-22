@@ -11,13 +11,23 @@ public class Projectile : MonoBehaviour
 
     private Vector2 direction = Vector2.zero;
 
-    private LayerMask target;
+    public LayerMask target;
+
+    public SpriteRenderer spRenderer;
+    public GameObject hitObj;
+
+    private bool isHit = false;
 
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
     }
-
+    private void OnEnable()
+    {
+        spRenderer.enabled = true;
+        hitObj.SetActive(false);
+        isHit = false;
+    }
     private void FixedUpdate()
     {
         Shoot();
@@ -32,7 +42,8 @@ public class Projectile : MonoBehaviour
 
     public void Shoot()
     {
-        _rb2d.velocity = direction * speed;
+        if(!isHit)
+            _rb2d.velocity = direction * speed;
     }
 
 
@@ -45,16 +56,23 @@ public class Projectile : MonoBehaviour
             if(damagable != null)
             {
                 damagable.Damage(-1);
-                Debug.Log("¾Æ¾ß");
+                isHit = true;
+                _rb2d.velocity = Vector2.zero;
+                spRenderer.enabled = false;
+                hitObj.SetActive(true);
             }
-
-            PoolManager.Instance.Push<Projectile>(this);
+            Invoke(nameof(Hide), 0.5f);
         }
         if (collision.CompareTag("Level"))
         {
             PoolManager.Instance.Push<Projectile>(this);
         }
 
+    }
+
+    public void Hide()
+    {
+        PoolManager.Instance.Push<Projectile>(this);
     }
 
     private void Clear()
