@@ -1,13 +1,15 @@
 using System;
-
+using System.Net;
 using UnityEngine;
+
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
 public class ProjectileController : MonoBehaviour
 {
+    public StatusHandler statusHandler;
     private AudioSource aSource = null;
-    public AudioClip shootSound = null;
+    private AudioClip shootSound = null;
 
     [SerializeField]
     private RangedAttackSO attackSO;
@@ -20,7 +22,7 @@ public class ProjectileController : MonoBehaviour
     private float delay = 0.2f;
 
     [SerializeField]
-    private float speed = 100f;
+    private float speed = 10f;
 
     [SerializeField]
     private Define.AttackDirection attackDirection;
@@ -49,21 +51,22 @@ public class ProjectileController : MonoBehaviour
     [SerializeField]
     private Transform projectileRoot;
 
-
     private Vector2 aimDirection = Vector2.right;
 
-    public float t = 1;
 
     private float currentTime = 0;
 
-    public bool isAttack = false;
+    private bool isAttack = false;
 
-    private Collider2D target;
+    private Collider2D hit;
 
     public float radius = 10f;
 
+    private bool isStart = false;
+
     private void Awake()
     {
+        statusHandler = GetComponent<StatusHandler>();
         aSource = GetComponent<AudioSource>();
     }
 
@@ -83,40 +86,91 @@ public class ProjectileController : MonoBehaviour
         shootSound = attackSO.attackSound;
     }
 
+    private void OnEnable()
+    {
+        EnemyRespawn.OnSpawn += EnemyCanAttack;
+        GameManager.Instance.OnGameStart += CanAttack;
+        GameManager.Instance.OnAppearBoss += StopAttack;
+        GameManager.Instance.OnFightBoss += CanAttack;
+        GameManager.Instance.OnGameOver += StopAttack;
+        GameManager.Instance.OnGameClear += StopAttack;
+        statusHandler.OnHit += ControlAttack;
+    }
+    private void OnDisable()
+    {
+        EnemyRespawn.OnSpawn -= EnemyCanAttack;
+
+        GameManager.Instance.OnGameStart -= CanAttack;
+        GameManager.Instance.OnAppearBoss -= StopAttack;
+        GameManager.Instance.OnFightBoss -= CanAttack;
+        GameManager.Instance.OnGameClear -= StopAttack;
+        statusHandler.OnHit -= ControlAttack;
+
+    }
+
     private void Update()
     {
-        currentTime += Time.deltaTime;
-        if (currentTime >= attackSO.delay)
+        if(isStart)
         {
-            currentTime = 0;
-            Attack();
+            currentTime += Time.deltaTime;
+            if (currentTime >= attackSO.delay)
+            {
+                currentTime = 0;
+                Shoot();
+            }
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Vector3 start = transform.position;
-    //    int segmentCount = 64;
-    //    for (int i = 0; i <= segmentCount; i++)
-    //    {
-    //        float angle = i * Mathf.PI * 2 / segmentCount;
-    //        Vector3 point = new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0) + start;
-            
-    //        Vector3 nextPoint = new Vector3(Mathf.Cos((i + 1) * Mathf.PI * 2 / segmentCount) * radius, Mathf.Sin((i + 1) * Mathf.PI * 2 / segmentCount) * radius, 0) + start;
-
-    //        Gizmos.DrawLine(point, nextPoint);
-    //    }
-    //}
-
-    
-    private void Attack()
+    private void StopAttack() => isStart = false;
+    private void ControlAttack(bool active)
     {
-        Shoot();
+        if (statusHandler.type == Define.EntityType.Player)
+        {
+            isStart = false;
+            Invoke(nameof(CanAttack), 2.5f);
+        }
 
     }
 
-    public void Shoot()
+    private void EnemyCanAttack()
+    {
+        isStart = true;
+    }
+
+    private void CanAttack() => isStart = true;
+
+    private void CanAttack(Define.Scene scene)
+    {
+        if (scene != Define.Scene.Start || scene != Define.Scene.ClearStage || scene != Define.Scene.GameoverStage)
+        {
+            isStart = true;
+        }
+    }
+
+    public void SetNumberOfProjectilesPerShot(int perShot)
+    {
+        numberOfProjectilesPerShot += perShot;
+
+        if(perShot <= 0)
+        {
+            return;
+        }
+        if (numberOfProjectilesPerShot <= 7 && numberOfProjectilesPerShot > 0)
+        {
+            projectilesAngleSpace = 180 / (float)(numberOfProjectilesPerShot);
+        }
+        else if(numberOfProjectilesPerShot >= 8)
+        {
+            projectilesAngleSpace = 360 / (float)numberOfProjectilesPerShot;
+        }
+    }
+
+    public void SetSpeed(float speed)
+    {
+        if(speed > 0)
+            this.speed += speed;
+    }
+    private void Shoot()
     {
         float minAngle = -(numberOfProjectilesPerShot / 2f) * projectilesAngleSpace + 0.5f * projectilesAngleSpace;
 
@@ -136,12 +190,24 @@ public class ProjectileController : MonoBehaviour
                 aimDirection = transform.right;
                 break;
             case Define.AttackDirection.Target:
-                target = Physics2D.OverlapCircle(transform.position, radius, attackSO.target);
+                hit = Physics2D.OverlapCircle(transform.position, radius, attackSO.target);
                 
-                if (target == null) 
+                if (hit == null) 
                     isAttack = false;
-                else 
-                    aimDirection = (target.transform.position - transform.position).normalized;
+                else
+                {
+                    if(projectileRoot == null)
+                    {
+                        aimDirection = (hit.transform.position - transform.position).normalized;
+
+                    }
+                    else
+                    {
+                        aimDirection = (hit.transform.position - projectileRoot.position).normalized;
+
+                    }
+
+                }
 
                 break;
         }
@@ -153,7 +219,7 @@ public class ProjectileController : MonoBehaviour
             {
                 aSource.Stop();
             }
-            aSource.PlayOneShot(shootSound);
+            aSource.PlayOneShot(shootSound, 0.5f);
 
             for (int i = 0; i < numberOfProjectilesPerShot; i++)
             {
@@ -161,6 +227,7 @@ public class ProjectileController : MonoBehaviour
                 float randomSpread = Random.Range(-spreadAngle, spreadAngle);
                 angle += randomSpread;
                 CreateProjectile(angle);
+                
             }
         }
     }
@@ -170,14 +237,28 @@ public class ProjectileController : MonoBehaviour
     public void CreateProjectile(float angle)
     {
         string name = Enum.GetName(typeof(Define.Projectile), (int)projectileType);
-
-        Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject, projectileRoot);
-
-        if (projectile != null)
+        if(projectileRoot == null)
         {
-            projectile.transform.position = transform.position;
-            projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject);
+
+            if (projectile != null)
+            {
+                projectile.transform.position = transform.position;
+                projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            }
         }
+        else
+        {
+            Projectile projectile = PoolManager.Instance.Pop<Projectile>(GameManager.Instance.Data.GetProjectile(name).gameObject, projectileRoot);
+
+            if (projectile != null)
+            {
+                projectile.transform.position = projectileRoot.position;
+                projectile.Init(RotateVector2(aimDirection, angle), speed, targetMask);
+            }
+        }
+
+
     }
 
     private Vector2 RotateVector2(Vector2 v, float angle)

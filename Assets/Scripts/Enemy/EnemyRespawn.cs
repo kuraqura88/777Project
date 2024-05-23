@@ -1,59 +1,176 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyRespawn : MonoBehaviour
 {
-    public GameObject enemyif;
-    public GameObject enemyfor;
-    public GameObject enemyswitch;
-    public GameObject enemypublic;
-    private GameObject[] enemies;
-    private void Start()
-    {
-        enemies = new GameObject[] { enemyif, enemyfor, enemyswitch, enemypublic };
-        //보스가 죽었거나 플레이어가 죽었거나 씬이 전환되는 경우에 빠져나가는 조건 적용 필수
-        InvokeRepeating("MakeEnemy", 1f, 2f);      
-    }
-    private void MakeEnemy()
-    {
-        int index = Random.Range(0, enemies.Length);
-        GameObject selectedEnemy = enemies[index];
+    public EnemyController[] enemyprefabs;
 
-        Vector2 spawnPosition = GetSpawnPosition(selectedEnemy);
+    public GameObject[] boss;
 
-        Instantiate(selectedEnemy, spawnPosition, Quaternion.identity);
-    }
-    private Vector2 GetSpawnPosition(GameObject enemy)
+    public static event Action OnSpawn;
+
+    private static List<EnemyController> spawnedEnemy = new List<EnemyController>();
+
+    private bool canSpawn = false;
+
+    public float delay = 2.5f;
+    private void OnEnable()
     {
-        if (enemy == enemyswitch)
+        GameManager.Instance.OnGameStart += CreateEnemy;
+        GameManager.Instance.OnGameClear += StopSpawn;
+        GameManager.Instance.OnGameOver += StopSpawn;
+        GameManager.Instance.OnAppearBoss += StopSpawn;
+        GameManager.Instance.OnAppearBoss += BossSpawn;
+        GameManager.Instance.OnFightBoss += OnFightSpawn;
+    }
+
+    private void OnFightSpawn()
+    {
+        delay = 20.0f;
+        CreateEnemy();
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStart -= CreateEnemy;
+        GameManager.Instance.OnGameClear -= StopSpawn;
+        GameManager.Instance.OnGameOver -= StopSpawn;
+        GameManager.Instance.OnAppearBoss -= StopSpawn;
+        GameManager.Instance.OnAppearBoss -= BossSpawn;
+        GameManager.Instance.OnFightBoss -= OnFightSpawn;
+
+    }
+
+    public static void Spawn()
+    {
+        OnSpawn?.Invoke();
+    }
+
+    public static void Clear(EnemyController enemy)
+    {
+        spawnedEnemy.Remove(enemy);
+    }
+
+    private void StopSpawn()
+    {
+        // 스폰 중단!
+        canSpawn = false;
+
+        // 모든 생성된 적 파괴
+        ClearAllEnemy();
+    }
+
+    // 보스 스폰
+    private void CreateEnemy()
+    {
+        delay = 2.5f;
+        canSpawn = true;
+        StartCoroutine(MakeEnemy(delay));
+    }
+    // 일반 스폰
+    private void CreateEnemy(Define.Scene scene)
+    {
+        canSpawn = true;
+        StartCoroutine(MakeEnemy(delay));
+    }
+
+    private void ClearAllEnemy()
+    {
+        foreach (var enemy in spawnedEnemy)
         {
-            int positionChoice = Random.Range(0, 2);
-            if (positionChoice == 0)
-            {
-                return new Vector2(7.5f, 6);
-            }
-            else
-            {
-                return new Vector2(7.5f, -6);
-            }
+            // TODO : 뭐 더 없앨거 있으면 추가 삭제
+            Destroy(enemy.gameObject);
         }
-        else if (enemy == enemypublic)
+        spawnedEnemy.Clear();
+    }
+
+    private IEnumerator MakeEnemy(float delay)
+    {
+        while (canSpawn)
         {
-            int positionChoice = Random.Range(0, 2);
-            if (positionChoice == 0)
+            if(spawnedEnemy.Count < 5)
             {
-                return new Vector2(-6, 7.5f);
+                int rand = Random.Range(0, enemyprefabs.Length);
+                EnemyController newone = Instantiate(enemyprefabs[rand]);
+                newone.transform.position = GetSpawnPosition(newone);
+                newone.CanMove();
+                spawnedEnemy.Add(newone);
+                Spawn();
+                yield return new WaitForSeconds(delay);
             }
-            else
-            {
-                return new Vector2(-6, -7.5f);
-            }
+
+            yield return new WaitUntil(() => spawnedEnemy.Count < 5);
+
         }
-        else
+
+        yield break;
+    }
+
+    private void BossSpawn()
+    {
+        switch(GameManager.Instance.scene)
         {
-            float RespawnY = Random.Range(4, -4);
-            return new Vector2(10, RespawnY);
+            case Define.Scene.BasicBossStage:
+                GameObject basic = Instantiate(boss[0]);
+                Boss bsBoss = basic.GetComponent<Boss>();
+                bsBoss.Appear();
+                break;
+            case Define.Scene.StandardBossStage:
+                GameObject standard = Instantiate(boss[1]);
+                Boss sdBoss = standard.GetComponent<Boss>();
+                sdBoss.Appear();
+                break;
+            case Define.Scene.ChallangeBossStage:
+                GameObject challange = Instantiate(boss[2]);
+                Boss challBoss = challange.GetComponent<Boss>();
+                challBoss.Appear();
+                break;
         }
+    }
+
+    private Vector2 GetSpawnPosition(EnemyController enemy)
+    {
+        switch ((int)enemy.type)
+        {
+
+            case (int)Define.EnemyName.Switch:
+                int positionChoice = Random.Range(0, 2);
+                if (positionChoice == 0)
+                {
+                    return new Vector2(7.5f, 6);
+                }
+                else
+                {
+                    return new Vector2(7.5f, -6);
+                }
+            case (int)Define.EnemyName.Public:
+                positionChoice = Random.Range(0, 2);
+                if (positionChoice == 0)
+                {
+                    return new Vector2(-6, 7.5f);
+                }
+                else
+                {
+                    return new Vector2(-6, -7.5f);
+                }
+
+            default:
+                float RespawnY = Random.Range(4, -4);
+                return new Vector2(7.5f, RespawnY);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnGameStart -= CreateEnemy;
+        GameManager.Instance.OnGameClear -= StopSpawn;
+        GameManager.Instance.OnGameOver -= StopSpawn;
+        GameManager.Instance.OnAppearBoss -= StopSpawn;
+        GameManager.Instance.OnAppearBoss -= BossSpawn;
+        GameManager.Instance.OnFightBoss -= OnFightSpawn;
     }
 }

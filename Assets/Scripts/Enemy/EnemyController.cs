@@ -1,38 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IDamagable
+public class EnemyController : MonoBehaviour
 {
-    EnemyPattern enemyPattern;
+    private EnemyPattern enemyPattern;
 
-    public Define.EnemyType enemyType;
+    public StatusHandler statusHandler { get; private set; }
 
-    public int currentHP;
+    protected Collider2D col = null;
+    public Define.EnemyType type;
 
-    public int maxHP = 5;
+    public Animator animator;
 
-    private void Start()
+    public GameObject Root;
+
+    private readonly int hashHit = Animator.StringToHash("isHit");
+    private readonly int hashDead = Animator.StringToHash("isDead");
+    //public Define.EnemyType enemyType;
+
+    protected virtual void Awake()
     {
-        currentHP = maxHP;
+        enemyPattern = GetComponent<EnemyPattern>();
+        statusHandler = GetComponent<StatusHandler>();
+        animator = GetComponentInChildren<Animator>();
+        col = GetComponent<Collider2D>();
+
     }
 
-    public bool Damage(int damage)
+    protected virtual void OnEnable()
     {
-        currentHP += damage;
 
-        if(currentHP <= 0)
-        {
-            Debug.Log("»ç¸Á");
-            return true;
-        }
-        
-        if(damage > 0)
-        {
-            // TODO : Èú
-            return false;
-        }
+        statusHandler.OnHit += OnHit;
+        statusHandler.OnDead += OnDead;
 
-        return true;
+    }
+    protected virtual void OnDisable()
+    {
+
+        statusHandler.OnHit -= OnHit;
+        statusHandler.OnDead -= OnDead;
+    }
+    protected virtual void Start()
+    {
+        if (enemyPattern != null)
+        {
+            enemyPattern.canMove = true;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyPattern component is missing on " + gameObject.name);
+        }
+    }
+    public void CanMove()
+    {
+        enemyPattern.CanMove();
+    }
+
+    protected void OnHit(bool active)
+    {
+        animator.SetTrigger(hashHit);
+    }
+
+    protected virtual void OnDead()
+    {
+        col.enabled = false;
+        animator.SetBool(hashDead, true);
+        Invoke(nameof(Dead), 0.3f);
+    }
+
+    private void Dead()
+    {
+        EnemyRespawn.Clear(this);
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        statusHandler.OnHit -= OnHit;
+        statusHandler.OnDead -= OnDead;
+
     }
 }

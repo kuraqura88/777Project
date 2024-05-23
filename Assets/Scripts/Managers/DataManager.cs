@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class DataManager
 {
     #region ========== Caching Data ==========
 
-    // Projectiles Data
     private Dictionary<string, Projectile> projectileDict = new Dictionary<string, Projectile>();
 
-    private Dictionary<Define.EnemyType, EnemyController[]> enemyDict = new Dictionary<Define.EnemyType, EnemyController[]>();
-    
+    private Dictionary<Define.CharacterType, SpriteLibraryAsset> playerDict = new Dictionary<Define.CharacterType, SpriteLibraryAsset>();
+
     #endregion
 
     public void Init()
@@ -21,7 +21,7 @@ public class DataManager
         {
             CreateProjectileData();
 
-            CreateEnemyData();
+            CreatePlayerData();
         }
         catch(Exception ex)
         {
@@ -29,16 +29,23 @@ public class DataManager
         }
     }
 
-    private void CreateEnemyData()
+    private void CreatePlayerData()
     {
-        EnemyController[] enemies = LoadAll<EnemyController>("", Define.Prefabs.Enemy);
-        foreach (Define.EnemyType type in Enum.GetValues(typeof(Define.EnemyType)))
-        {
-            EnemyController[] controller = enemies.Where(x => x.enemyType == type).ToArray();
+        SpriteLibraryAsset[] asset = LoadAll<SpriteLibraryAsset>("", Define.Prefabs.Player);
 
-            enemyDict.Add(type, controller);
+        foreach(Define.CharacterType type in Enum.GetValues(typeof(Define.CharacterType)))
+        {
+            for(int i = 0; i < asset.Length; i++)
+            {
+                if(Enum.GetName(typeof(Define.CharacterType), type).Equals(asset[i].name))
+                {
+                    playerDict.Add(type, asset[i]);
+                    break;
+                }
+            }
         }
     }
+
 
     private void CreateProjectileData()
     {
@@ -86,6 +93,7 @@ public class DataManager
         return Resources.LoadAll<T>(path);
     }
 
+
     #region ========== Get Data Method ===========
     public Projectile GetProjectile(string name)
     {
@@ -96,14 +104,15 @@ public class DataManager
         return null;
     }
 
-    public EnemyController[] GetEnemyData(Define.EnemyType enemyType)
+    public SpriteLibraryAsset GetPlayerData(Define.CharacterType type)
     {
-        if(enemyDict.TryGetValue(enemyType, out var enemies))
+        if(playerDict.TryGetValue(type, out var playerData))
         {
-            return enemies;
+            return playerData;
         }
         return null;
     }
+
     #endregion
 
 }

@@ -10,6 +10,8 @@ public class EnemyAttack : MonoBehaviour
     private float attackRate = 1.0f;
     private float nextAttackTime = 0.0f;
 
+    public Define.EnemyAttack atkType;
+
     private void Awake()
     {
         enemyPattern = GetComponent<EnemyPattern>();
@@ -17,33 +19,34 @@ public class EnemyAttack : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > nextAttackTime)
+        switch (atkType)
         {
-            if (gameObject.tag == "enemypublic")
-            {
-                // 'enemypublic'에 대해서만 별도의 타이머 로직을 사용
+            case Define.EnemyAttack.Straight:
+                {
+                    Attack1();
+                }
+                break;
+            case Define.EnemyAttack.Sector:
+                {
+                    Attack2();
+                }
+                break;
+            case Define.EnemyAttack.Targetting:
                 timer += Time.deltaTime;
                 if (timer > 3.0f && Time.time > nextAttackTime)
                 {
                     Attack3();
-                    nextAttackTime = Time.time + attackRate; // 다음 공격 시간 설정
+                    nextAttackTime = Time.time + attackRate;
                 }
-            }
-            else if (Time.time > nextAttackTime)
-            {
-                // 나머지 적 타입에 대한 공격 로직
-                if (gameObject.tag == "enemyif" && enemyPattern.isStop)
-                {
-                    Attack1();
-                }
-                else if (gameObject.tag == "enemyswitch")
-                {
-                    Attack2();
-                }
+                break;
+            case Define.EnemyAttack.Suicide:
+                Attack4();
+                break;
 
-                nextAttackTime = Time.time + attackRate; // 다음 공격 시간 설정
-            }
-        }
+            default:
+
+                break;
+        }        
     }
     private void Attack1()
     {
@@ -51,10 +54,15 @@ public class EnemyAttack : MonoBehaviour
     }
     private void Attack2()
     {
-        Debug.Log("일직선 공격");
+        Debug.Log("공격없음");
     }
     private void Attack3()
     {
-        Debug.Log("캐릭터를 향해 일직선 공격");
+        Debug.Log("일직선 공격");
+    }
+
+    private void Attack4()
+    {
+        Debug.Log("저격 공격");
     }
 }

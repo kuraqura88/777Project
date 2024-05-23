@@ -1,5 +1,7 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -11,12 +13,29 @@ public class Projectile : MonoBehaviour
 
     private Vector2 direction = Vector2.zero;
 
-    private LayerMask target;
+    public LayerMask target;
+
+    public SpriteRenderer spRenderer;
+    public GameObject hitObj;
+
+    public AudioSource audioSource;
+    public AudioClip hitSound;
+
+    private bool isHit = false;
 
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
     }
+    private void OnEnable()
+    {
+        spRenderer.enabled = true;
+        hitObj.SetActive(false);
+        isHit = false;
+
+        SceneManager.sceneLoaded += OnLoadedScene;
+    }
+
 
     private void FixedUpdate()
     {
@@ -28,11 +47,18 @@ public class Projectile : MonoBehaviour
         this.direction = direction;
         this.speed = speed;
         this.target = target;
+
+        spRenderer.flipX = direction.x < 0;
+    }
+    private void OnLoadedScene(Scene arg0, LoadSceneMode arg1)
+    {
+        PoolManager.Instance.Push<Projectile>(this);
     }
 
     public void Shoot()
     {
-        _rb2d.velocity = direction * speed;
+        if(!isHit)
+            _rb2d.velocity = direction * speed;
     }
 
 
@@ -44,17 +70,29 @@ public class Projectile : MonoBehaviour
             
             if(damagable != null)
             {
+                if(audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+                audioSource.PlayOneShot(hitSound, 0.5f);
                 damagable.Damage(-1);
-                Debug.Log("¾Æ¾ß");
+                isHit = true;
+                _rb2d.velocity = Vector2.zero;
+                spRenderer.enabled = false;
+                hitObj.SetActive(true);
             }
-
-            PoolManager.Instance.Push<Projectile>(this);
+            Invoke(nameof(Hide), 0.5f);
         }
         if (collision.CompareTag("Level"))
         {
             PoolManager.Instance.Push<Projectile>(this);
         }
 
+    }
+
+    public void Hide()
+    {
+        PoolManager.Instance.Push<Projectile>(this);
     }
 
     private void Clear()
