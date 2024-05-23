@@ -64,18 +64,18 @@ public class Boss : EnemyController
         switch(type)
         {
             case Define.BossType.Basic:
-                stats.SetLife(30);
+                stats.SetLife(10);
                 stats.SetPower(1);
                 stats.SetSpeed(5);
 
                 break;
             case Define.BossType.Standard:
-                stats.SetLife(30);
+                stats.SetLife(15);
                 stats.SetPower(1);
                 stats.SetSpeed(5);
                 break;
             case Define.BossType.Challange:
-                stats.SetLife(30);
+                stats.SetLife(20);
                 stats.SetPower(1);
                 stats.SetSpeed(5);
                 break;
@@ -90,4 +90,9 @@ public class Boss : EnemyController
         GameManager.Instance.GameClear();
     }
 
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnFightBoss -= CanDamage;
+
+    }
 }

@@ -140,11 +140,11 @@ public class MainScene : MonoBehaviour
         }
         else if (GameManager.Instance.scene == Define.Scene.StandardBossStage)
         {
-            GameManager.Instance.SoundManager.PlayBGM(Define.Scene.StandardStage);
+            GameManager.Instance.SoundManager.PlayBGM(Define.Scene.StandardBossStage);
         }
         else if (GameManager.Instance.scene == Define.Scene.ChallangeBossStage)
         {
-            GameManager.Instance.SoundManager.PlayBGM(Define.Scene.ChallangeStage);
+            GameManager.Instance.SoundManager.PlayBGM(Define.Scene.ChallangeBossStage);
         }
     }
 }

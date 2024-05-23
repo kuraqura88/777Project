@@ -75,4 +75,11 @@ public class EnemyController : MonoBehaviour
         EnemyRespawn.Clear(this);
         Destroy(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        statusHandler.OnHit -= OnHit;
+        statusHandler.OnDead -= OnDead;
+
+    }
 }
