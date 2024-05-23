@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Idle01
+      m_Hash: 72571955
+      m_Sprite: {fileID: 21300000, guid: 52e778c1ee825f54aa5547e0c1ff8dab, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 52e778c1ee825f54aa5547e0c1ff8dab, type: 2}
+    - m_Name: Idle02
+      m_Hash: 492440969
+      m_Sprite: {fileID: 21300000, guid: 4d885bac1b1a7304dbee08027db1217d, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 4d885bac1b1a7304dbee08027db1217d, type: 2}
+    - m_Name: Idle03
+      m_Hash: 710753567
+      m_Sprite: {fileID: 21300000, guid: d40f96beef79d2141a802e12c33d20a9, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: d40f96beef79d2141a802e12c33d20a9, type: 2}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Hit
+    m_Hash: 580870305
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Hit01
+      m_Hash: 904899161
+      m_Sprite: {fileID: 21300000, guid: 0b83a83e916fa5642b6ac82fd2990209, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 0b83a83e916fa5642b6ac82fd2990209, type: 2}
+    - m_Name: Hit02
+      m_Hash: 753335267
+      m_Sprite: {fileID: 21300000, guid: b128418f107996b498b14b1763aa4feb, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: b128418f107996b498b14b1763aa4feb, type: 2}
+    - m_Name: Hit03
+      m_Hash: 467782517
+      m_Sprite: {fileID: 21300000, guid: 1f7da03954e93c6468fdcbd3c373d5d2, type: 2}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 1f7da03954e93c6468fdcbd3c373d5d2, type: 2}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638519667100084042
+  m_Version: 1

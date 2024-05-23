@@ -109,10 +109,14 @@ public class PoolManager : MonoBehaviour
     // √ ±‚»≠
     public void Init()
     {
+        Instance = FindObjectOfType<PoolManager>();
         if (Instance == null)
-            Instance = this;
+        {
+            GameObject go = new GameObject { name = "PoolManager" };
+            Instance = go.AddComponent<PoolManager>();
+        }
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(Instance.gameObject);
     }
 
 

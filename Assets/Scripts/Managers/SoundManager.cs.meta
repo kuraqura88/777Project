@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: a159e66be222c7147929e5ff72a28d50
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - startBgm: {fileID: 8300000, guid: 9669960e415ea604d81fb0784634df79, type: 3}
+  - basicBgm: {fileID: 8300000, guid: 337eddf09f8aa49a69452cd33bf98e55, type: 3}
+  - standardBgm: {fileID: 8300000, guid: 337eddf09f8aa49a69452cd33bf98e55, type: 3}
+  - challangeBgm: {fileID: 8300000, guid: 337eddf09f8aa49a69452cd33bf98e55, type: 3}
+  - clearBgm: {fileID: 8300000, guid: e6c225722957c49e08cb9f890d8899ec, type: 3}
+  - gameoverBgm: {fileID: 8300000, guid: 4d65a088a47fb4135b66272c359574cf, type: 3}
+  - basicBossBgm: {fileID: 8300000, guid: 44e29ccbc110142b7aaff7817280adea, type: 3}
+  - standardBossBgm: {fileID: 8300000, guid: 0d70ffd02a7da4a9a962de7fa3c2180b, type: 3}
+  - challangeBossBgm: {fileID: 8300000, guid: 568ebd25bfbbd40e1b07b56dae6bb8e0, type: 3}
+  - clearEffect: {instanceID: 0}
+  - failedEffect: {instanceID: 0}
+  - enemyHitEffect: {instanceID: 0}
+  - playerHitEffect: {instanceID: 0}
+  - deadEffect: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

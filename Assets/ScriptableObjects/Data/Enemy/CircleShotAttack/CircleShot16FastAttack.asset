@@ -16,7 +16,7 @@ MonoBehaviour:
   delay: 3
   speed: 10
   direction: 2
-  projectile: 0
+  projectile: 1
   target:
     serializedVersion: 2
     m_Bits: 64

@@ -16,10 +16,11 @@ MonoBehaviour:
   delay: 3
   speed: 8
   direction: 2
-  projectile: 0
+  projectile: 1
   target:
     serializedVersion: 2
     m_Bits: 64
+  attackSound: {fileID: 0}
   numberOfProjectilesPerShot: 8
   projectilesAngleSpace: 45
   spreadAngle: 0

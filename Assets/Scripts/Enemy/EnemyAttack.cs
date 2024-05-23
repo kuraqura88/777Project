@@ -21,17 +21,17 @@ public class EnemyAttack : MonoBehaviour
     {
         switch (atkType)
         {
-            case Define.EnemyAttack.Attack1:
+            case Define.EnemyAttack.Straight:
                 {
                     Attack1();
                 }
                 break;
-            case Define.EnemyAttack.Attack2:
+            case Define.EnemyAttack.Sector:
                 {
                     Attack2();
                 }
                 break;
-            case Define.EnemyAttack.Attack3:
+            case Define.EnemyAttack.Targetting:
                 timer += Time.deltaTime;
                 if (timer > 3.0f && Time.time > nextAttackTime)
                 {
@@ -39,8 +39,12 @@ public class EnemyAttack : MonoBehaviour
                     nextAttackTime = Time.time + attackRate;
                 }
                 break;
-            default:
+            case Define.EnemyAttack.Suicide:
                 Attack4();
+                break;
+
+            default:
+
                 break;
         }        
     }

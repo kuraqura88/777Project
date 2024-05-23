@@ -4,24 +4,9 @@ public class Define
 
     public enum Projectile
     {
-        Normal,
-        BigProjectile,
-        TriangleBullet,
-        DifferenctBullet
-    }
-
-    public enum CharacterType
-    {
-        Normal,
-        Rare,
-        Unique,
-        Epic,
-        MAX
-    }
-    public enum LoadDataType
-    {
-        None,
-        Projectiles,
+        RedBullet,
+        BlueBullet,
+        PurpleBullet
     }
 
     public enum AttackDirection
@@ -32,6 +17,31 @@ public class Define
         Right,
         Target
     }
+
+
+    #endregion
+
+    #region ========== Character Type ==========
+
+    public enum CharacterType
+    {
+        Normal,
+        Rare,
+        Unique,
+        Epic,
+        MAX
+    }
+
+
+    #endregion
+
+    public enum LoadDataType
+    {
+        None,
+        Projectiles,
+    }
+
+    #region ========== Enemy ==========
 
     public enum EnemyType
     {
@@ -45,24 +55,47 @@ public class Define
     {
         If,
         For,
-        Switch,        
+        Switch,
         Public
     }
 
     public enum EnemyAttack
     {
-        Attack1, // 직선 공격
-        Attack2, // 3갈래 공격
-        Attack3,  // 저격 공격
-        Attack4   // 자폭 (충돌)
+        Straight, // 직선 공격
+        Sector, // 3갈래 공격
+        Targetting,  // 저격 공격
+        Suicide   // 자폭 (충돌)
     }
+
+    #endregion
+
 
     public enum Prefabs
     {
         None,
         Player,
+        Audio,
         Enemy,
         Projectiles,
     }
-    #endregion
+
+    public enum SoundType
+    {
+        Bgm,
+        Effect,
+
+    }
+
+    public enum Scene
+    {
+        Start,
+        BasicStage,
+        StandardStage,
+        ChallangeStage,
+        ClearStage,
+        GameoverStage,
+        BasicBossStage,
+        StandardBossStage,
+        ChallangeBossStage
+    }
 }
