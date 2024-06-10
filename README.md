@@ -11,135 +11,28 @@
 
 ## 게임 설명
 
-|![image (1)](https://github.com/kuraqura88/777Project/assets/167050509/2119c2e6-8d20-446c-999b-59d2d0c2d2e7)|![녹음-2024-05-22-102936](https://github.com/kuraqura88/777Project/assets/167050509/0f664bda-9cec-4ecd-9b98-ebae25b0de5b)|![CharacterMoving (1)](https://github.com/kuraqura88/777Project/assets/167050509/9fb03c4b-02f2-4e5e-8412-5b09a264b823)|
+|![스크린샷 2024-06-11 012609](https://github.com/kuraqura88/777Project/assets/167050509/192c80f0-d468-4a02-8a0e-678d60d557c1)|![second](https://github.com/kuraqura88/777Project/assets/167050509/4c10a354-e94d-47f5-baf5-97a7dd818886)|![Thrid](https://github.com/kuraqura88/777Project/assets/167050509/d0802bfb-1d49-4175-bb01-19dc794e07af)|
 |:---:|:---:|:---:|
-|**게임 시작 화면**|**랜덤 캐릭터 생성**|**생성된 캐릭터**|
+|**게임 시작 화면**|**플레이어 이동**|**오브젝트 상호 작용**|
 
-- 게임 시작 버튼을 눌러 실행할 수 있습니다. 바로 다음 화면에서 슬롯을 통해 랜덤한 캐릭터가 생성됩니다.
+- 게임 시작 버튼을 눌러 실행할 수 있습니다. (Setting과 Exit Game은 미구현입니다.)
 
-- 기본적인 조작은 키보드 방향키를 통해 이루어지며, 공격 조작은 따로 없이 일정한 시간마다 투사체가 발사됩니다.
+- 기본적인 조작은 키보드 WASD를 통해 이루어지며, 추가로 SHIFT키를 누르면 중앙에 있는 스태미나가 다 닳을 때까지 달릴 수 있습니다.
 
-- 나오는 몬스터들을 쓰러트리며, 최종적으로 보스 몬스터를 무찌르면(?) 클리어할 수 있습니다!
+- 최종적으로 방에서 탈출하면 게임 클리어입니다.
+
+
 
 
 ## 조작 방식
 
 |이동 방향|위|아래|오른쪽|왼쪽|
 |:---:|:---:|:---:|:---:|:---:|
-|키보드|↑|↓|→|←|
+|키보드|W|S|D|A|
 
-## 전투 방식
+## 진행 방식
 
-![녹음-2024-05-22-152542](https://github.com/kuraqura88/777Project/assets/167050509/fb1f5a3f-4bc5-43cd-9c6a-a6634dd52192)
+![first](https://github.com/kuraqura88/777Project/assets/167050509/89507197-6a7d-49d4-b8cf-6854d9f6f604)
 
-- 캐릭터 기준으로 자동적으로 공격이 나갑니다.
-- 에너미 또한 에너미 기준으로 자동적으로 공격이 나갑니다.
-
-![2](https://github.com/kuraqura88/777Project/assets/167050509/58a30877-4d14-4ab5-8043-b06cd6b3c7f1)
-
-
-- 상단 게이지 바가 오른쪽 끝까지 도달하면 보스와 조우하게 됩니다!
-- 보스를 무찔러 다음 단계로 넘어가 자신의 실력을 증명해 보세요!
-
-## 파일 디텍토리
-
-─Animation  
-│  ├─Boss  
-│  ├─Enemy  
-│  ├─Handle  
-│  ├─Player  
-│  └─Projectile  
-├─Background  
-├─Content  
-│  ├─BackgroundsPixelArt  
-│  │  ├─city 1  
-│  │  ├─city 2  
-│  │  ├─city 3  
-│  │  ├─city 4  
-│  │  ├─city 5  
-│  │  ├─city 6  
-│  │  ├─city 7  
-│  │  └─city 8  
-│  ├─Character  
-│  │  ├─Character1  
-│  │  │  ├─Hit  
-│  │  │  ├─Idle  
-│  │  │  └─Move  
-│  │  ├─Character2  
-│  │  │  ├─Hit  
-│  │  │  ├─Idle  
-│  │  │  └─Move  
-│  │  └─Character3  
-│  │      ├─Hit  
-│  │      ├─Idle  
-│  │      └─Move  
-│  ├─Enemy&Bullet  
-│  ├─Slot  
-│  │  └─Animation  
-│  ├─Test  
-│  └─Tutor  
-├─Fonts  
-│  ├─ChosunCentennial  
-│  └─KCC-Hanbit  
-├─Images  
-├─Input  
-├─Karugamo  
-│  ├─BGM  
-│  │  └─FREE  
-│  ├─Sample  
-│  │  ├─Audio  
-│  │  ├─Scenes  
-│  │  └─Scripts  
-│  └─Scripts  
-│      └─Audio  
-├─Prefabs  
-├─Resources  
-│  ├─Prefabs  
-│  │  ├─Boss  
-│  │  ├─Enemy  
-│  │  ├─Player  
-│  │  └─Projectiles  
-│  └─Sounds  
-│      └─NormalAttackSound  
-├─Scenes  
-├─ScriptableObjects  
-│  ├─Data  
-│  │  ├─Boss  
-│  │  ├─Enemy  
-│  │  │  ├─CircleShotAttack  
-│  │  │  ├─MultiShotAttack  
-│  │  │  └─OneShotAttack  
-│  │  └─Player  
-│  └─Scripts  
-├─Scripts  
-│  ├─Background  
-│  ├─Character  
-│  │  └─ItemFunctionScripts  
-│  ├─Enemy  
-│  │  └─Boss  
-│  ├─Interface  
-│  ├─Managers  
-│  ├─Pool  
-│  ├─Projectile  
-│  ├─Scene  
-│  └─Util  
-├─Sounds  
-│  ├─190114_AchivementSFX  
-│  ├─ArcadeGameBGM#17  
-│  ├─ArcadeGameBGM#3  
-│  └─CasualGameSounds  
-├─TextMesh Pro  
-│  ├─Documentation  
-│  ├─Fonts  
-│  ├─Resources  
-│  │  ├─Fonts & Materials  
-│  │  ├─Sprite Assets  
-│  │  └─Style Sheets  
-│  ├─Shaders  
-│  └─Sprites  
-├─Timeline  
-└─UI  
-    ├─Animation  
-    ├─Dark UI  
-    │  └─Free  
-    └─StartBackGround  
+- F키를 눌러 상호 작용을 하며 주변 사물로부터 힌트를 얻으세요.
+- 주변 사물로부터 힌트를 얻고 그걸 기반으로 문제를 풀어 나가시면 됩니다.
