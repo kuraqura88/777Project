@@ -13,22 +13,22 @@ public class ItemManager : MonoBehaviour
             Debug.Log("null");
         }
     }
-    public void ApplyItemEffect (itemType itemType)
-    {
-        //switch (itemType)
-        //{
-        //    case itemType.AttackUp:
-        //        characterStats.IncreaseAttackPower(2f); // 테스트로 일단 2만 상승
-        //        break;
-        //    case itemType.SpeedUp:
-        //        characterStats.IncreaseSpeed(2f);
-        //        break;
-        //    case itemType.LifeUp:
-        //        characterStats.IncreaseLife(1);
-        //        break;
-        //    default:
-        //        Debug.Log("Unknown item type");
-        //        break;
-        //}
-    }
+    //public void ApplyItemEffect (itemType itemType)
+    //{
+    //    //switch (itemType)
+    //    //{
+    //    //    case itemType.AttackUp:
+    //    //        characterStats.IncreaseAttackPower(2f); // 테스트로 일단 2만 상승
+    //    //        break;
+    //    //    case itemType.SpeedUp:
+    //    //        characterStats.IncreaseSpeed(2f);
+    //    //        break;
+    //    //    case itemType.LifeUp:
+    //    //        characterStats.IncreaseLife(1);
+    //    //        break;
+    //    //    default:
+    //    //        Debug.Log("Unknown item type");
+    //    //        break;
+    //    //}
+    //}
 }
