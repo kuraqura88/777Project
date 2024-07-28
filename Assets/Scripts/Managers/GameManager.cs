@@ -196,11 +196,7 @@ public class GameManager : MonoBehaviour
 
         effectManager = GetComponent<EffectManager>() ?? gameObject.AddComponent<EffectManager>();
         soundManager = GetComponent<SoundManager>() ?? gameObject.AddComponent<SoundManager>();
-        if(dataManager == null)
-        {
-            dataManager = new DataManager();
-            dataManager.Init();
-        }
+
     }
 
     private void OnEnable()
@@ -210,10 +206,9 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-
     }
 
     private void Start()

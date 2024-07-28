@@ -96,7 +96,7 @@ public class ProjectileController : MonoBehaviour
         GameManager.Instance.OnGameClear += StopAttack;
         statusHandler.OnHit += ControlAttack;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         EnemyRespawn.OnSpawn -= EnemyCanAttack;
 

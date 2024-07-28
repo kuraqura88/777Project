@@ -55,7 +55,7 @@ public class MainScene : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.OnAppearBoss -= AppearBoss;
         GameManager.Instance.OnFightBoss -= FightBoss;

@@ -38,7 +38,6 @@ public class EnemyController : MonoBehaviour
     }
     protected virtual void OnDisable()
     {
-
         statusHandler.OnHit -= OnHit;
         statusHandler.OnDead -= OnDead;
     }

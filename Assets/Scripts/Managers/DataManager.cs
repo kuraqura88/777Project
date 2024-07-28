@@ -17,16 +17,9 @@ public class DataManager
 
     public void Init()
     {
-        try
-        {
-            CreateProjectileData();
+        CreateProjectileData();
 
-            CreatePlayerData();
-        }
-        catch(Exception ex)
-        {
-            Debug.Log(ex);
-        }
+        CreatePlayerData();
     }
 
     private void CreatePlayerData()
@@ -88,7 +81,7 @@ public class DataManager
         if (prefabType == Define.Prefabs.None)
             path = "";
         else
-            path += $"{Enum.GetName(typeof(Define.Prefabs), (int)prefabType)}/{name}";
+            path += $"{Enum.GetName(typeof(Define.Prefabs), prefabType)}/";
 
         return Resources.LoadAll<T>(path);
     }
