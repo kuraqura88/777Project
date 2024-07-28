@@ -40,3 +40,107 @@
 
 - 상단 게이지 바가 오른쪽 끝까지 도달하면 보스와 조우하게 됩니다!
 - 보스를 무찔러 다음 단계로 넘어가 자신의 실력을 증명해 보세요!
+
+
+## 파일 디텍토리
+
+─Animation
+│  ├─Boss
+│  ├─Enemy
+│  ├─Handle
+│  ├─Player
+│  └─Projectile
+├─Background
+├─Content
+│  ├─BackgroundsPixelArt
+│  │  ├─city 1
+│  │  ├─city 2
+│  │  ├─city 3
+│  │  ├─city 4
+│  │  ├─city 5
+│  │  ├─city 6
+│  │  ├─city 7
+│  │  └─city 8
+│  ├─Character
+│  │  ├─Character1
+│  │  │  ├─Hit
+│  │  │  ├─Idle
+│  │  │  └─Move
+│  │  ├─Character2
+│  │  │  ├─Hit
+│  │  │  ├─Idle
+│  │  │  └─Move
+│  │  └─Character3
+│  │      ├─Hit
+│  │      ├─Idle
+│  │      └─Move
+│  ├─Enemy&Bullet
+│  ├─Slot
+│  │  └─Animation
+│  ├─Test
+│  └─Tutor
+├─Fonts
+│  ├─ChosunCentennial
+│  └─KCC-Hanbit
+├─Images
+├─Input
+├─Karugamo
+│  ├─BGM
+│  │  └─FREE
+│  ├─Sample
+│  │  ├─Audio
+│  │  ├─Scenes
+│  │  └─Scripts
+│  └─Scripts
+│      └─Audio
+├─Prefabs
+├─Resources
+│  ├─Prefabs
+│  │  ├─Boss
+│  │  ├─Enemy
+│  │  ├─Player
+│  │  └─Projectiles
+│  └─Sounds
+│      └─NormalAttackSound
+├─Scenes
+├─ScriptableObjects
+│  ├─Data
+│  │  ├─Boss
+│  │  ├─Enemy
+│  │  │  ├─CircleShotAttack
+│  │  │  ├─MultiShotAttack
+│  │  │  └─OneShotAttack
+│  │  └─Player
+│  └─Scripts
+├─Scripts
+│  ├─Background
+│  ├─Character
+│  │  └─ItemFunctionScripts
+│  ├─Enemy
+│  │  └─Boss
+│  ├─Interface
+│  ├─Managers
+│  ├─Pool
+│  ├─Projectile
+│  ├─Scene
+│  └─Util
+├─Sounds
+│  ├─190114_AchivementSFX
+│  ├─ArcadeGameBGM#17
+│  ├─ArcadeGameBGM#3
+│  └─CasualGameSounds
+├─TextMesh Pro
+│  ├─Documentation
+│  ├─Fonts
+│  ├─Resources
+│  │  ├─Fonts & Materials
+│  │  ├─Sprite Assets
+│  │  └─Style Sheets
+│  ├─Shaders
+│  └─Sprites
+├─Timeline
+└─UI
+    ├─Animation
+    ├─Dark UI
+    │  └─Free
+    └─StartBackGround
