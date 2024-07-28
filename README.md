@@ -44,103 +44,103 @@
 
 ## 파일 디텍토리
 
-─Animation
-│  ├─Boss
-│  ├─Enemy
-│  ├─Handle
-│  ├─Player
-│  └─Projectile
-├─Background
-├─Content
-│  ├─BackgroundsPixelArt
-│  │  ├─city 1
-│  │  ├─city 2
-│  │  ├─city 3
-│  │  ├─city 4
-│  │  ├─city 5
-│  │  ├─city 6
-│  │  ├─city 7
-│  │  └─city 8
-│  ├─Character
-│  │  ├─Character1
-│  │  │  ├─Hit
-│  │  │  ├─Idle
-│  │  │  └─Move
-│  │  ├─Character2
-│  │  │  ├─Hit
-│  │  │  ├─Idle
-│  │  │  └─Move
-│  │  └─Character3
-│  │      ├─Hit
-│  │      ├─Idle
-│  │      └─Move
-│  ├─Enemy&Bullet
-│  ├─Slot
-│  │  └─Animation
-│  ├─Test
-│  └─Tutor
-├─Fonts
-│  ├─ChosunCentennial
-│  └─KCC-Hanbit
-├─Images
-├─Input
-├─Karugamo
-│  ├─BGM
-│  │  └─FREE
-│  ├─Sample
-│  │  ├─Audio
-│  │  ├─Scenes
-│  │  └─Scripts
-│  └─Scripts
-│      └─Audio
-├─Prefabs
-├─Resources
-│  ├─Prefabs
-│  │  ├─Boss
-│  │  ├─Enemy
-│  │  ├─Player
-│  │  └─Projectiles
-│  └─Sounds
-│      └─NormalAttackSound
-├─Scenes
-├─ScriptableObjects
-│  ├─Data
-│  │  ├─Boss
-│  │  ├─Enemy
-│  │  │  ├─CircleShotAttack
-│  │  │  ├─MultiShotAttack
-│  │  │  └─OneShotAttack
-│  │  └─Player
-│  └─Scripts
-├─Scripts
-│  ├─Background
-│  ├─Character
-│  │  └─ItemFunctionScripts
-│  ├─Enemy
-│  │  └─Boss
-│  ├─Interface
-│  ├─Managers
-│  ├─Pool
-│  ├─Projectile
-│  ├─Scene
-│  └─Util
-├─Sounds
-│  ├─190114_AchivementSFX
-│  ├─ArcadeGameBGM#17
-│  ├─ArcadeGameBGM#3
-│  └─CasualGameSounds
-├─TextMesh Pro
-│  ├─Documentation
-│  ├─Fonts
-│  ├─Resources
-│  │  ├─Fonts & Materials
-│  │  ├─Sprite Assets
-│  │  └─Style Sheets
-│  ├─Shaders
-│  └─Sprites
-├─Timeline
-└─UI
-    ├─Animation
-    ├─Dark UI
-    │  └─Free
-    └─StartBackGround
+─Animation  
+│  ├─Boss  
+│  ├─Enemy  
+│  ├─Handle  
+│  ├─Player  
+│  └─Projectile  
+├─Background  
+├─Content  
+│  ├─BackgroundsPixelArt  
+│  │  ├─city 1  
+│  │  ├─city 2  
+│  │  ├─city 3  
+│  │  ├─city 4  
+│  │  ├─city 5  
+│  │  ├─city 6  
+│  │  ├─city 7  
+│  │  └─city 8  
+│  ├─Character  
+│  │  ├─Character1  
+│  │  │  ├─Hit  
+│  │  │  ├─Idle  
+│  │  │  └─Move  
+│  │  ├─Character2  
+│  │  │  ├─Hit  
+│  │  │  ├─Idle  
+│  │  │  └─Move  
+│  │  └─Character3  
+│  │      ├─Hit  
+│  │      ├─Idle  
+│  │      └─Move  
+│  ├─Enemy&Bullet  
+│  ├─Slot  
+│  │  └─Animation  
+│  ├─Test  
+│  └─Tutor  
+├─Fonts  
+│  ├─ChosunCentennial  
+│  └─KCC-Hanbit  
+├─Images  
+├─Input  
+├─Karugamo  
+│  ├─BGM  
+│  │  └─FREE  
+│  ├─Sample  
+│  │  ├─Audio  
+│  │  ├─Scenes  
+│  │  └─Scripts  
+│  └─Scripts  
+│      └─Audio  
+├─Prefabs  
+├─Resources  
+│  ├─Prefabs  
+│  │  ├─Boss  
+│  │  ├─Enemy  
+│  │  ├─Player  
+│  │  └─Projectiles  
+│  └─Sounds  
+│      └─NormalAttackSound  
+├─Scenes  
+├─ScriptableObjects  
+│  ├─Data  
+│  │  ├─Boss  
+│  │  ├─Enemy  
+│  │  │  ├─CircleShotAttack  
+│  │  │  ├─MultiShotAttack  
+│  │  │  └─OneShotAttack  
+│  │  └─Player  
+│  └─Scripts  
+├─Scripts  
+│  ├─Background  
+│  ├─Character  
+│  │  └─ItemFunctionScripts  
+│  ├─Enemy  
+│  │  └─Boss  
+│  ├─Interface  
+│  ├─Managers  
+│  ├─Pool  
+│  ├─Projectile  
+│  ├─Scene  
+│  └─Util  
+├─Sounds  
+│  ├─190114_AchivementSFX  
+│  ├─ArcadeGameBGM#17  
+│  ├─ArcadeGameBGM#3  
+│  └─CasualGameSounds  
+├─TextMesh Pro  
+│  ├─Documentation  
+│  ├─Fonts  
+│  ├─Resources  
+│  │  ├─Fonts & Materials  
+│  │  ├─Sprite Assets  
+│  │  └─Style Sheets  
+│  ├─Shaders  
+│  └─Sprites  
+├─Timeline  
+└─UI  
+    ├─Animation  
+    ├─Dark UI  
+    │  └─Free  
+    └─StartBackGround  
