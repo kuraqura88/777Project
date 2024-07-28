@@ -101,6 +101,18 @@ public class PoolManager : MonoBehaviour
     // 최상위 부모
     private Dictionary<(string, Type), object> poolDict = new Dictionary<(string, Type), object>();
 
+    private Transform root = null;
+    public Transform Root
+    {
+        get
+        {
+            if(root == null)
+            {
+                root = Instantiate(new GameObject("Root")).transform;
+            }
+            return root;
+        }
+    }
     private void Awake()
     {
         Init();
@@ -194,7 +206,13 @@ public class PoolManager : MonoBehaviour
         {
             CreatePool<T>(original);
         }
-        return ((Pool<T>)poolDict[key]).Pop(parent);
+        Transform pr = parent;
+        if(pr == null)
+        {
+            pr = Root;
+            
+        }
+        return ((Pool<T>)poolDict[key]).Pop(pr);
     }
 
     public void AllReset()
